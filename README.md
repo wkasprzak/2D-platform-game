@@ -12,7 +12,7 @@
 -->
 
 # Object-oriented programming
-Long term project in Java - Wojciech Kasprzak
+Long term project in Java - Wojciech Kasprzak <br>
 The project will involve creating a platform game in the Java language. Throughout the semester, additional classes and packages will be added to expand the application's functionality. Below is a brief description of the most important classes. <br>
 
 The main package will contain the basic framework for the graphical application, including a class responsible for building the window and the main game class. <br>
