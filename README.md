@@ -13,39 +13,39 @@
 
 # Object-oriented programming
 Long term project in Java - Wojciech Kasprzak
-The project will involve creating a platform game in the Java language. Throughout the semester, additional classes and packages will be added to expand the application's functionality. Below is a brief description of the most important classes.
+The project will involve creating a platform game in the Java language. Throughout the semester, additional classes and packages will be added to expand the application's functionality. Below is a brief description of the most important classes. <br>
 
-The main package will contain the basic framework for the graphical application, including a class responsible for building the window and the main game class.
-The entities package will contain information related to the in-game characters, including the player and monsters. Individual classes will include information about the behavior of the creature, its state, as well as attributes such as health, strength, and so on. Sample part of the Player class:
+The main package will contain the basic framework for the graphical application, including a class responsible for building the window and the main game class. <br>
+The entities package will contain information related to the in-game characters, including the player and monsters. Individual classes will include information about the behavior of the creature, its state, as well as attributes such as health, strength, and so on. Sample part of the Player class: <br>
 
-Player --- extends ---> Entity
-	+Player(float x, float y, int width, int height)
-	#BufferedImage[][] charactersAppearance;
-	#moving: boolean = false
-	#left: boolean
-  #right: boolean
-  #jump: boolean
-  #facedLeft: int
-  #flipX: int	
-	#void setAction()
-	+void draw(Graphics g)
-	+void update()
-	#void updateAnimationCounter()
-	#void changePosition()
-	#void loadGraphics()
+Player --- extends ---> Entity <br>
+	+Player(float x, float y, int width, int height) <br>
+	#BufferedImage[][] charactersAppearance; <br>
+	#moving: boolean = false <br>
+	#left: boolean <br>
+ 	#right: boolean <br>
+  	#jump: boolean <br>
+  	#facedLeft: int <br>
+  	#flipX: int <br>
+	#void setAction() <br>
+	+void draw(Graphics g) <br>
+	+void update() <br>
+	#void updateAnimationCounter() <br>
+	#void changePosition() <br>
+	#void loadGraphics() <br>
 
-The levels package will contain information regarding the generated levels, including their structure and textures.
-Another package that will be part of the application is the one related to collectible objects, such as tokens.
-The last main package (for now) is the game state package, which will include classes such as Menu and Playing. These classes will be responsible for managing specific parts of the application.
-In addition to the aforementioned packages, the game will also include several utility classes such as MouseInput, KeyboardInput, DataImport, and so on.
-By next week, the README file will contain more detailed information about the classes.
+The levels package will contain information regarding the generated levels, including their structure and textures. <br>
+Another package that will be part of the application is the one related to collectible objects, such as tokens. <br>
+The last main package (for now) is the game state package, which will include classes such as Menu and Playing. These classes will be responsible for managing specific parts of the application. <br>
+In addition to the aforementioned packages, the game will also include several utility classes such as MouseInput, KeyboardInput, DataImport, and so on. <br>
+By next week, the README file will contain more detailed information about the classes. <br>
 
-Aims of the project:
--> understanding the concepts of object-oriented programming
--> understanding the idea of Inheritance
--> using Interfaces
--> Practicing Class Desing
--> Developing Programming Skills
+Aims of the project: <br>
+-> understanding the concepts of object-oriented programming <br>
+-> understanding the concept of Inheritance <br>
+-> using Interfaces <br>
+-> Practicing Class Desing <br>
+-> Developing Programming Skills <br>
 
 -----------
 Have you ever wondered how map overlays for Google Maps are created?  In the project you will build your own interactive visualization of a large dataset tagged by geospatial information.  Both powerful and challenging, data visualization is one of the hot topics of modern computer science - as well as something that influences our world every day!
