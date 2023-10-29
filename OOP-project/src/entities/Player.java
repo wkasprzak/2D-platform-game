@@ -18,6 +18,9 @@ public class Player extends Entity{
 	private boolean moving = false;
 	private boolean left, right, jump, down;
 	private int facedLeft = 1, flipX = 0;
+	
+	// Level
+	private int[][] levelData;
 		
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
@@ -83,6 +86,10 @@ public class Player extends Entity{
 		for(int i = 0; i < charactersAppearance.length; i++)
 			for(int j = 0; j < charactersAppearance[i].length; j++)
 				charactersAppearance[i][j] = image.getSubimage(j*32, i*32, 32, 32);
+	}
+	
+	public void LoadLevelData(int[][] levelData) {
+		this.levelData = levelData;
 	}
 
 	public boolean isLeft() {

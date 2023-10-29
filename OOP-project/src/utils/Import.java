@@ -2,12 +2,17 @@ package utils;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
-
-import main.Game;
 
 public class Import {
 	
@@ -32,15 +37,48 @@ public class Import {
 		return image;
 	}
 	
-	public static int[][] ImportLevelData() {
-		int[][] levelData = new int[Game.NUMBER_OF_TILES_IN_HEIGHT][Game.NUMBER_OF_TILES_IN_WIDTH];
-		BufferedImage level = ImportData(LEVEL_ONE);
-		for(int i = 0; i < level.getHeight(); i++)
-			for(int j = 0; j < level.getWidth(); j++) {
-				Color color = new Color(level.getRGB(j, i));
-				levelData[i][j] = color.getRed();
-				}
-		return levelData;
-	}
-	
+    public static List<int[][]> importCSVData() {
+        
+    	URL url = Import.class.getResource("/levels");
+        File directory = null;
+
+        try {
+            directory = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        List<int[][]> levelDataList = new ArrayList<>();
+
+        File[] files = directory.listFiles();
+
+        for (File file : files) {
+            if (file.isFile() && file.getName().endsWith(".csv")) {
+                List<int[]> levelData = new ArrayList<>();
+                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        String[] stringVal = line.split(",");
+                        int[] row = new int[stringVal.length];
+                        for (int i = 0; i < stringVal.length; i++) {
+                            try {
+                                row[i] = Integer.parseInt(stringVal[i]);
+                            } catch (NumberFormatException e) {
+                                row[i] = 0;
+                            }
+                        }
+                        levelData.add(row);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                int[][] levelDataArray = new int[levelData.size()][];
+                for (int i = 0; i < levelData.size(); i++) {
+                    levelDataArray[i] = levelData.get(i);
+                }
+                levelDataList.add(levelDataArray);
+            }
+        }
+        return levelDataList;
+    }
 }
