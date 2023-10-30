@@ -10,8 +10,8 @@ public class Game implements Runnable {
 	
 	// Game thread
 	private Thread gameThread;
-	private final int FPS = 60;
-	private final int UPS = 100;
+	private final int FPS = 120;
+	private final int UPS = 200;
 	
 	// Game states
 	private Playing playing;

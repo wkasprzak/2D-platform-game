@@ -8,15 +8,13 @@ import entities.Player;
 import levels.LevelHandler;
 import main.Game;
 
-import static utils.Import.importCSVData;
-
 public class Playing implements StateMethods {
 
 	private Game game;
 	private Player player;
 	private LevelHandler levelHandler;
 	
-	private boolean levelCompleted = false;
+	//private boolean levelCompleted = false;
 	
 	public Playing(Game game) {
 		this.game = game;
@@ -26,19 +24,17 @@ public class Playing implements StateMethods {
 	public void loadNextLevel() {
 		resetAll();
 		levelHandler.loadNextLevel();
-		//player.setSpawn(levelHandler.getCurrentLevel().getPlayerSpawn());
 	}
 	
 	private void initClasses() {
 		levelHandler = new LevelHandler(game);
-		player = new Player(200, 200, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE));
+		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE));
 		player.LoadLevelData(levelHandler.getCurrentLevel().getLevelData());
 	}
 
 	@Override
 	public void update() {
 		player.update();
-		levelHandler.update();
 	}
 
 	@Override
@@ -103,7 +99,7 @@ public class Playing implements StateMethods {
 	}
 	
 	public void resetAll() {
-		levelCompleted = false;
+		//levelCompleted = false;
 	}
 
 	public Player getPlayer() {

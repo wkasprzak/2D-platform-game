@@ -54,21 +54,14 @@ public class LevelHandler {
 	public void draw(Graphics g) {
 		for(int i = 0; i < Game.NUMBER_OF_TILES_IN_HEIGHT; i++) {
 			for(int j = 0; j < levels.get(levelIndex).getLevelData()[i].length; j++) {
-				int index = levels.get(levelIndex).getLevelIndex(j, i);
+				int index = levels.get(levelIndex).getTileIndex(j, i);
 				g.drawImage(levelTiles[index], j*Game.TILES_SIZE, i*Game.TILES_SIZE, Game.TILES_SIZE, Game.TILES_SIZE, null);
 			}
 		}
 	}
 	
-	public void update() {
-		
-	}
-	
 	public Level getCurrentLevel() {
 		return levels.get(levelIndex);
 	}
-	
-	public int GetAmountOfLevels() {
-		return levels.size();
-	}
+
 }

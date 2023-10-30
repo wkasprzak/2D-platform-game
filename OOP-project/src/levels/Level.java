@@ -18,7 +18,7 @@ public class Level {
 		return levelData;
 	}
 	
-	public int getLevelIndex(int x, int y) {
+	public int getTileIndex(int x, int y) {
 		return levelData[y][x];
 	}
 }

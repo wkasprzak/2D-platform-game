@@ -16,8 +16,13 @@ public class Player extends Entity{
 	
 	// Moving
 	private boolean moving = false;
-	private boolean left, right, jump, down;
-	private int facedLeft = 1, flipX = 0;
+	private boolean left, right, jump;
+	private int facedRight = 1, flipX = 0; // Changing the appearance of the character depending on the direction
+	private float speed = 2.0f * Game.SCALE;
+	
+	// Hitbox
+	private float minimalisationX = 7 * Game.SCALE;
+	private float minimalisationY = 16 * Game.SCALE;
 	
 	// Level
 	private int[][] levelData;
@@ -26,6 +31,7 @@ public class Player extends Entity{
 		super(x, y, width, height);
 		this.state = IDLE;
 		loadGraphics();
+		initHitbox(17,16);
 	}
 		
 	private void setAction() {
@@ -34,21 +40,21 @@ public class Player extends Entity{
 			state = RUNNING;
 		else if(!moving)
 			state = IDLE;
-		
 	}
 	
 	public void draw(Graphics g) {
-		g.drawImage(charactersAppearance[state][animationIndex], (int)x + (int)Game.SCALE * flipX / 2, (int)y, (int)Game.SCALE * width * facedLeft / 2, (int)Game.SCALE * height / 2, null);
+		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
+		drawHitbox(g);
 	}
 	
 	public void update() {
 		changePosition();
 		updateAnimationCounter();
-		setAction();
-		
+		setAction();	
 	}
 	
 	private void updateAnimationCounter() {
+		// Animation counter decides which sprite should be shown
 		animationCounter++;
 		if(animationCounter >= ANIMATION_SPEED) {
 			animationCounter = 0;
@@ -64,20 +70,54 @@ public class Player extends Entity{
 		moving = false;
 		if((!left && !right) || (right && left)) 
 			return;
+		
 		if(left) {
-			this.x -= 5;
-			facedLeft = -1;
-			flipX = width;
-		} else if (right) {
-			this.x += 5;
-			facedLeft = 1;
-			flipX = 0;
+			if(isPossibleToMove(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+				// Updating position
+				hitbox.x -= speed;
+				moving = true;
+				// Changing animation side
+				facedRight = -1;
+				flipX = width;
+			}
+		} else if (right) {		
+			if(isPossibleToMove(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+				// Updating position
+				hitbox.x += speed;
+				moving = true;
+				// Changing animation side
+				facedRight = 1;
+				flipX = 0;
+			}
 		} else if (jump) {
 			this.y -= 5;
-		} else if (down) {
-			this.y += 5;
 		}
-		moving = true;
+	}
+	
+	private static boolean isPossibleToMove(float x, float y, float width, float height, int[][] levelData) {
+		// Checking if any part of character overlaps block
+		if(!solidBlock(x, y, levelData))
+			if(!solidBlock(x + width, y, levelData))
+				if(!solidBlock(x, y + height, levelData))
+					if(!solidBlock(x + width, y + height, levelData))
+						return true;	
+		return false;
+	}
+	
+	private static boolean solidBlock(float x, float y, int[][] levelData) {
+		// Checking if in window
+		if(x < 0 || x >= Game.GAME_WIDTH) return true;
+		if(y < 0 || y >= Game.GAME_HEIGHT) return true;
+		
+		// Finding position
+		float xPos = x / Game.TILES_SIZE;
+		float yPos = y / Game.TILES_SIZE;
+		int lvlData = levelData[(int)yPos][(int)xPos];
+		
+		// Looking if block on position is solidBlock (according to tileset)
+		if(lvlData < 0 || lvlData > 29 || lvlData != 5) return true;
+		
+		return false;
 	}
 	
 	private void loadGraphics() {
@@ -116,11 +156,4 @@ public class Player extends Entity{
 		this.jump = jump;
 	}
 
-	public boolean isDown() {
-		return down;
-	}
-
-	public void setDown(boolean down) {
-		this.down = down;
-	}
 }

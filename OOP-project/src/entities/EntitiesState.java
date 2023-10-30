@@ -1,10 +1,18 @@
 package entities;
 
+// Class which includes states of Entities (e.g. IDLE, RUNNING...)
+
 public class EntitiesState {
 	
-	public static int ANIMATION_SPEED = 15;
+	public static int ANIMATION_SPEED = 25;
+	
+	public static class EnemyStates {
+		// TO DO
+	}
 
 	public static class PlayerStates {
+		
+		// Number of row of Cat-Sheet.png in which state occurs 
 		public static final int IDLE = 0;
 		public static final int RUNNING = 4;
 		public static final int JUMPING = 19;
@@ -13,6 +21,7 @@ public class EntitiesState {
 		public static final int HIT = 52;
 		public static final int DEAD = 53; 
 		
+		// How many different looks state has
 		public static int getSpriteAmount(int player_action) {
 			switch(player_action) {
 			case IDLE:

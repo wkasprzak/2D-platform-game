@@ -27,6 +27,8 @@ public class KeyboardInput implements KeyListener {
 		case PLAYING:
 			gamePanel.getGame().getPlaying().keyReleased(e);
 			break;
+		case QUIT:
+			break;
 		}
 	}
 
@@ -37,6 +39,8 @@ public class KeyboardInput implements KeyListener {
 			break;
 		case PLAYING:
 			gamePanel.getGame().getPlaying().keyPressed(e);
+			break;
+		case QUIT:
 			break;
 		}
 	}
