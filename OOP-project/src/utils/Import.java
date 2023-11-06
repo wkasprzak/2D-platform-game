@@ -18,6 +18,7 @@ public class Import {
 	public static final String PLAYER = "/Cat-Sheet.png";
 	public static final String TILES = "/tileset_forest.png";
 	public static final String LEVEL_ONE = "/level_one.png";
+	public static final String MENU_BACKGROUND_IMAGE = "/background_menu.png";
 	
 	public static BufferedImage ImportData(String fileName) {		
 		BufferedImage image = null;

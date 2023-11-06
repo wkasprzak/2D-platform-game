@@ -32,7 +32,7 @@ public class LevelHandler {
 		}
 		
 		Level newLevel = levels.get(levelIndex);
-		game.getPlaying().getPlayer().LoadLevelData(newLevel.getLevelData());
+		game.getPlaying().getPlayer().loadLevelData(newLevel.getLevelData());
 	}
 	
 	private void createLevels() {

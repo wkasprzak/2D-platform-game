@@ -1,5 +1,6 @@
 package states;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ public class Playing implements StateMethods {
 	private LevelHandler levelHandler;
 	
 	//private boolean levelCompleted = false;
+	private boolean paused = false;
 	
 	public Playing(Game game) {
 		this.game = game;
@@ -29,7 +31,7 @@ public class Playing implements StateMethods {
 	private void initClasses() {
 		levelHandler = new LevelHandler(game);
 		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE));
-		player.LoadLevelData(levelHandler.getCurrentLevel().getLevelData());
+		player.loadLevelData(levelHandler.getCurrentLevel().getLevelData());
 	}
 
 	@Override
@@ -41,30 +43,10 @@ public class Playing implements StateMethods {
 	public void draw(Graphics g) {
 		levelHandler.draw(g);
 		player.draw(g);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(paused) {
+			g.setColor(new Color(0,0,0,200));
+			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+		}
 	}
 
 	@Override
@@ -78,6 +60,12 @@ public class Playing implements StateMethods {
 			break;
 		case KeyEvent.VK_SPACE:
 			player.setJump(true);
+			break;
+		case KeyEvent.VK_ESCAPE:
+			paused = !paused;
+			break;
+		case KeyEvent.VK_DELETE:
+			Gamestate.state = Gamestate.MENU;
 			break;
 		}
 		
@@ -96,6 +84,26 @@ public class Playing implements StateMethods {
 			player.setJump(false);
 			break;
 		}
+	}
+	
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void resetAll() {

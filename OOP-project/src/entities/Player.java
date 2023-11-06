@@ -6,42 +6,87 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import utils.Import;
 
-import static entities.EntitiesState.PlayerStates.*;
-import static entities.EntitiesState.ANIMATION_SPEED;
-
 public class Player extends Entity{
 	
 	// Appearance
 	private BufferedImage[][] charactersAppearance;
 	
 	// Moving
-	private boolean moving = false;
+	private boolean moving = false, attacking = false;
 	private boolean left, right, jump;
 	private int facedRight = 1, flipX = 0; // Changing the appearance of the character depending on the direction
-	private float speed = 2.0f * Game.SCALE;
+	private float playerSpeed = 1.0f * Game.SCALE;
+	
+	// Jumping && Falling
+	private float airSpeed = 0f;
+	private float gravity = 0.04f * Game.SCALE;
+	private float jumpSpeed = -2.25f * Game.SCALE;
+	private float fallSpeed = 0.5f * Game.SCALE;
+	private boolean inAir = false;
 	
 	// Hitbox
-	private float minimalisationX = 7 * Game.SCALE;
-	private float minimalisationY = 16 * Game.SCALE;
+	private float minimalisationX = 9 * Game.SCALE;
+	private float minimalisationY = 17 * Game.SCALE;
 	
 	// Level
 	private int[][] levelData;
+	
+	// Number of row of Cat-Sheet.png in which state occurs 
+	private static final int IDLE = 0;
+	private static final int RUNNING = 4;
+	private static final int JUMPING = 19;
+	private static final int FALLING = 20;
+	private static final int ATTACK = 39;
+	private static final int HIT = 52;
+	private static final int DEAD = 53; 
+	
+	// How many different looks state has
+	private static int howManyPics(int player_action) {
+		switch(player_action) {
+		case IDLE:
+		case RUNNING:
+		case DEAD:
+			return 8;
+		case ATTACK:
+		case JUMPING:
+		case FALLING:
+			return 4;
+		case HIT:
+			return 2;
+		default: 
+			return 1;
+		}
+	}
 		
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		this.state = IDLE;
+		this.maxHealth = 100;
+		this.currentHealth = maxHealth;
 		loadGraphics();
-		initHitbox(17,16);
+		initHitbox(15 * Game.SCALE, 14 * Game.SCALE);
 	}
 		
 	private void setAction() {
 		int startState = state;
 		if(moving)
 			state = RUNNING;
-		else if(!moving)
+		else 
 			state = IDLE;
+		
+		if(inAir) {
+			if(airSpeed < 0) state = JUMPING;
+			else state = FALLING;
+		}
+		
+		if(startState != state) resetAnimation();
 	}
 	
+	private void resetAnimation() {
+		animationCounter = 0;
+		animationIndex = 0;
+	}
+
 	public void draw(Graphics g) {
 		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
 		drawHitbox(g);
@@ -59,7 +104,7 @@ public class Player extends Entity{
 		if(animationCounter >= ANIMATION_SPEED) {
 			animationCounter = 0;
 			animationIndex++;
-			if(animationIndex >= getSpriteAmount(state)) {
+			if(animationIndex >= howManyPics(state)) {
 				animationIndex = 0;
 			}
 		}
@@ -68,58 +113,58 @@ public class Player extends Entity{
 	private void changePosition() {
 
 		moving = false;
-		if((!left && !right) || (right && left)) 
-			return;
+		if(jump && !inAir) {
+			inAir = true;
+			airSpeed = jumpSpeed;
+		}
+				
+		if(!inAir && ((!left && !right) || (right && left))) return;		
+
+		float speed = 0;
 		
 		if(left) {
-			if(isPossibleToMove(hitbox.x - speed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-				// Updating position
-				hitbox.x -= speed;
-				moving = true;
-				// Changing animation side
-				facedRight = -1;
-				flipX = width;
-			}
-		} else if (right) {		
-			if(isPossibleToMove(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-				// Updating position
-				hitbox.x += speed;
-				moving = true;
-				// Changing animation side
-				facedRight = 1;
-				flipX = 0;
-			}
-		} else if (jump) {
-			this.y -= 5;
+			speed -= playerSpeed;
+			// Changing animation side
+			facedRight = -1;
+			flipX = width;
 		}
+		if (right) {	
+			speed += playerSpeed;
+			// Changing animation side
+			facedRight = 1;
+			flipX = 0;
+		}
+		
+		if(!isOnFloor(hitbox, levelData) && !inAir)
+			inAir = true;
+		
+		if(inAir) {
+			if(isPossibleToMove(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+				hitbox.y += airSpeed;
+				airSpeed += gravity;
+				updateX(speed);
+			} else {
+				hitbox.y = getCloserToFloor(hitbox, airSpeed);
+				if(airSpeed > 0) {
+					inAir = false;
+					airSpeed = 0;
+				} else airSpeed = fallSpeed;
+				updateX(speed);
+			}
+		} else updateX(speed);
+		
+		moving = true;
 	}
 	
-	private static boolean isPossibleToMove(float x, float y, float width, float height, int[][] levelData) {
-		// Checking if any part of character overlaps block
-		if(!solidBlock(x, y, levelData))
-			if(!solidBlock(x + width, y, levelData))
-				if(!solidBlock(x, y + height, levelData))
-					if(!solidBlock(x + width, y + height, levelData))
-						return true;	
-		return false;
+	private void updateX(float speed) {
+		if(isPossibleToMove(hitbox.x + speed, hitbox.y, hitbox.width, hitbox.height, levelData)) hitbox.x += speed;
+		else hitbox.x = getCloserToWall(hitbox, speed);
 	}
-	
-	private static boolean solidBlock(float x, float y, int[][] levelData) {
-		// Checking if in window
-		if(x < 0 || x >= Game.GAME_WIDTH) return true;
-		if(y < 0 || y >= Game.GAME_HEIGHT) return true;
+
+	private void changeHealth(int value) {
 		
-		// Finding position
-		float xPos = x / Game.TILES_SIZE;
-		float yPos = y / Game.TILES_SIZE;
-		int lvlData = levelData[(int)yPos][(int)xPos];
-		
-		// Looking if block on position is solidBlock (according to tileset)
-		if(lvlData < 0 || lvlData > 29 || lvlData != 5) return true;
-		
-		return false;
 	}
-	
+
 	private void loadGraphics() {
 		BufferedImage image = Import.ImportData(Import.PLAYER);
 		charactersAppearance = new BufferedImage[51][8];
@@ -128,8 +173,9 @@ public class Player extends Entity{
 				charactersAppearance[i][j] = image.getSubimage(j*32, i*32, 32, 32);
 	}
 	
-	public void LoadLevelData(int[][] levelData) {
+	public void loadLevelData(int[][] levelData) {
 		this.levelData = levelData;
+		if(!isOnFloor(hitbox, levelData)) inAir = true;
 	}
 
 	public boolean isLeft() {

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import entities.Player;
 import states.Gamestate;
+import states.Menu;
 import states.Playing;
 
 public class Game implements Runnable {
@@ -11,10 +12,11 @@ public class Game implements Runnable {
 	// Game thread
 	private Thread gameThread;
 	private final int FPS = 120;
-	private final int UPS = 200;
+	public static int UPS = 200;
 	
 	// Game states
 	private Playing playing;
+	private Menu menu;
 	// TO DO: ADD MENU & OPTION & PAUSE STATE
 	
 	// Game window
@@ -44,6 +46,7 @@ public class Game implements Runnable {
 	}
 
 	private void initStates() {
+		menu = new Menu(this);
 		playing = new Playing(this);
 	}
 
@@ -55,11 +58,15 @@ public class Game implements Runnable {
 	public void draw(Graphics g) {
 		switch(Gamestate.state) {
 		case MENU:
+			menu.draw(g);
 			break;
 //		case OPTIONS:
 //			break
 		case PLAYING:
 			playing.draw(g);
+			break;
+		default:
+			System.exit(0);
 			break;
 		}
 	}
@@ -67,11 +74,14 @@ public class Game implements Runnable {
 	public void update() {
 		switch(Gamestate.state) {
 		case MENU:
+			menu.update();
 			break;
 //		case OPTIONS:
 //			break
 		case PLAYING:
 			playing.update();
+			break;
+		default:
 			break;
 		}
 	}
@@ -123,4 +133,7 @@ public class Game implements Runnable {
 		return playing;
 	}
 	
+	public Menu getMenu() {
+		return menu;
+	}
 }
