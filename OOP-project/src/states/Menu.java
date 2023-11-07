@@ -1,0 +1,186 @@
+package states;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+import main.Game;
+import utils.Import;
+import states.*;
+
+public class Menu implements StateMethods {
+
+	private Game game;
+	public static JButton playButton, optionsButton, storyButton, howToPlayButton, exitButton;
+	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
+	
+	private BufferedImage backgroundImage;
+	
+	public Menu(Game game) {
+		this.game = game;
+		backgroundImage = Import.ImportData(Import.MENU_BACKGROUND_IMAGE);
+		createButtons();
+	}
+
+	@Override
+	public void update() {
+		showButtons();
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Gamestate.state = Gamestate.PLAYING;
+            	hideButtons();
+            }
+        });
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		
+		g.drawImage(backgroundImage, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		String gameTitle1 = "Catticus:";
+		String gameTitle2 = "The Adventures";
+		String gameTitle3 = "of a Hungry Cat";
+        
+        
+        // Getting size of text
+        FontMetrics fm = g.getFontMetrics(font);
+        int textWidth1 = fm.stringWidth(gameTitle1);
+        int textWidth2 = fm.stringWidth(gameTitle2);
+        int textWidth3 = fm.stringWidth(gameTitle3);
+        int textHeight = fm.getHeight();
+
+        // Positions to center the text
+		int x1 = (Game.GAME_WIDTH - textWidth1) / 2;
+		int x2 = (Game.GAME_WIDTH - textWidth2) / 2;
+		int x3 = (Game.GAME_WIDTH - textWidth3) / 2;
+		int y = (Game.GAME_HEIGHT - textHeight) / 2 - (int)(75 * Game.SCALE);
+
+        // Setting font & color
+		g.setColor(Color.WHITE);
+		g.setFont(font);
+
+        // Draw text
+        g.drawString(gameTitle1, x1, y);
+        g.drawString(gameTitle2, x2, y + (int)(15 * Game.SCALE));
+        g.drawString(gameTitle3, x3, y + (int)(30 * Game.SCALE));
+        
+        drawButtons(g);
+		
+	}
+	
+	private void drawButtons(Graphics g) {
+		playButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2,(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		playButton.printComponents(g);
+		storyButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(20 * Game.SCALE),(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		storyButton.printComponents(g);
+		optionsButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(40 * Game.SCALE),(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		optionsButton.printComponents(g);
+		exitButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(60 * Game.SCALE),(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		exitButton.printComponents(g);
+		howToPlayButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		howToPlayButton.printComponents(g);
+	}
+	
+	private void hideButtons() {
+    	playButton.setVisible(false);
+    	optionsButton.setVisible(false);
+    	exitButton.setVisible(false);
+    	storyButton.setVisible(false);
+    	howToPlayButton.setVisible(false);
+	}
+	
+	private void showButtons() {
+    	playButton.setVisible(true);
+    	optionsButton.setVisible(true);
+    	exitButton.setVisible(true);
+    	storyButton.setVisible(true);
+    	howToPlayButton.setVisible(true);
+	}
+
+	private void createButtons() {
+		playButton = new JButton("PLAY");
+		optionsButton = new JButton("OPTIONS");
+		storyButton = new JButton("STORY");
+		exitButton = new JButton("EXIT");
+		howToPlayButton = new JButton("?");
+		
+		playButton.setForeground(Color.WHITE);
+		playButton.setFont(font);
+		playButton.setOpaque(false);
+		playButton.setContentAreaFilled(false);
+		playButton.setBorderPainted(false);
+		
+		optionsButton.setForeground(Color.WHITE);
+		optionsButton.setFont(font);
+		optionsButton.setOpaque(false);
+		optionsButton.setContentAreaFilled(false);
+		optionsButton.setBorderPainted(false);
+		
+		storyButton.setForeground(Color.WHITE);
+		storyButton.setFont(font);
+		storyButton.setOpaque(false);
+		storyButton.setContentAreaFilled(false);
+		storyButton.setBorderPainted(false);
+		
+		exitButton.setForeground(Color.WHITE);
+		exitButton.setFont(font);
+		exitButton.setOpaque(false);
+		exitButton.setContentAreaFilled(false);
+		exitButton.setBorderPainted(false);
+		
+		howToPlayButton.setForeground(Color.WHITE);
+		howToPlayButton.setFont(font);
+		howToPlayButton.setOpaque(false);
+		howToPlayButton.setContentAreaFilled(false);
+		howToPlayButton.setBorderPainted(false);
+
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_SPACE)
+			Gamestate.state = Gamestate.PLAYING;
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}

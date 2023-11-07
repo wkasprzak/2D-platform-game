@@ -2,13 +2,17 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import input.KeyboardInput;
 import input.MouseInput;
+import states.Menu;
 
 import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
+
 
 public class GamePanel extends JPanel {
 
@@ -19,6 +23,15 @@ public class GamePanel extends JPanel {
 		this.game = game;
 		initInput();
 		setSize();
+		addButtons();
+	}
+
+	private void addButtons() {
+		add(Menu.playButton);
+		add(Menu.optionsButton);
+		add(Menu.exitButton);
+		add(Menu.howToPlayButton);
+		add(Menu.storyButton);
 	}
 
 	private void setSize() {
