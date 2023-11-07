@@ -41,7 +41,6 @@ The levels package will contain information regarding the generated levels, incl
 Another package that will be part of the application is the one related to collectible objects, such as tokens. <br>
 The last main package (for now) is the game state package, which will include classes such as Menu and Playing. These classes will be responsible for managing specific parts of the application. <br>
 In addition to the aforementioned packages, the game will also include several utility classes such as MouseInput, KeyboardInput, DataImport, and so on. <br>
-By next week, the README file will contain more detailed information about the classes. <br>
 
 Aims of the project: <br>
 -> understanding the concepts of object-oriented programming <br>
