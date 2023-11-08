@@ -4,8 +4,11 @@ import java.awt.Graphics;
 
 import entities.Player;
 import states.Gamestate;
+import states.Help;
 import states.Menu;
+import states.Options;
 import states.Playing;
+import states.Story;
 
 public class Game implements Runnable {
 	
@@ -17,7 +20,10 @@ public class Game implements Runnable {
 	// Game states
 	private Playing playing;
 	private Menu menu;
-	// TO DO: ADD MENU & OPTION & PAUSE STATE
+	private Help help;
+	private Story story;
+	private Options options;
+	// TO DO: ADD PAUSE STATE
 	
 	// Game window
 	private GameWindow gameWindow;
@@ -48,6 +54,9 @@ public class Game implements Runnable {
 	private void initStates() {
 		menu = new Menu(this);
 		playing = new Playing(this);
+		help = new Help(this);
+		story = new Story(this);
+		options = new Options(this);
 	}
 
 	private void startGameLoop() {
@@ -60,8 +69,15 @@ public class Game implements Runnable {
 		case MENU:
 			menu.draw(g);
 			break;
-//		case OPTIONS:
-//			break
+		case OPTIONS:
+			options.draw(g);
+			break;
+		case HELP:
+			help.draw(g);
+			break;
+		case STORY:
+			story.draw(g);
+			break;
 		case PLAYING:
 			playing.draw(g);
 			break;
@@ -76,8 +92,15 @@ public class Game implements Runnable {
 		case MENU:
 			menu.update();
 			break;
-//		case OPTIONS:
-//			break
+		case OPTIONS:
+			options.update();
+			break;
+		case HELP:
+			help.update();
+			break;
+		case STORY:
+			story.update();
+			break;
 		case PLAYING:
 			playing.update();
 			break;
@@ -136,4 +159,5 @@ public class Game implements Runnable {
 	public Menu getMenu() {
 		return menu;
 	}
+	
 }

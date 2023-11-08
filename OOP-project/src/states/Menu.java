@@ -16,11 +16,12 @@ import javax.swing.JLabel;
 import main.Game;
 import utils.Import;
 import states.*;
+import main.GameWindow.*;
 
 public class Menu implements StateMethods {
 
 	private Game game;
-	public static JButton playButton, optionsButton, storyButton, howToPlayButton, exitButton;
+	public static JButton playButton, optionsButton, storyButton, helpButton, exitButton;
 	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
 	
 	private BufferedImage backgroundImage;
@@ -34,6 +35,57 @@ public class Menu implements StateMethods {
 	@Override
 	public void update() {
 		showButtons();
+		playButtonAction();
+		helpButtonAction();
+		exitButtonAction();
+		storyButtonAction();
+		optionsButtonAction();
+	}
+	
+	private void optionsButtonAction() {
+        optionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Gamestate.state = Gamestate.OPTIONS;
+            	Options.exitButton.setVisible(true);
+            	hideButtons();
+            }
+        });
+		
+	}
+
+	private void storyButtonAction() {
+        storyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Gamestate.state = Gamestate.STORY;
+            	Story.exitButton.setVisible(true);
+            	hideButtons();
+            }
+        });
+	}
+
+	private void exitButtonAction() {
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	System.exit(0);
+            }
+        });
+	}
+
+	private void helpButtonAction() {
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Gamestate.state = Gamestate.HELP;
+            	Help.exitButton.setVisible(true);
+            	hideButtons();
+            }
+        });
+	}
+
+	private void playButtonAction() {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,8 +139,8 @@ public class Menu implements StateMethods {
 		optionsButton.printComponents(g);
 		exitButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(60 * Game.SCALE),(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		exitButton.printComponents(g);
-		howToPlayButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
-		howToPlayButton.printComponents(g);
+		helpButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		helpButton.printComponents(g);
 	}
 	
 	private void hideButtons() {
@@ -96,7 +148,7 @@ public class Menu implements StateMethods {
     	optionsButton.setVisible(false);
     	exitButton.setVisible(false);
     	storyButton.setVisible(false);
-    	howToPlayButton.setVisible(false);
+    	helpButton.setVisible(false);
 	}
 	
 	private void showButtons() {
@@ -104,7 +156,7 @@ public class Menu implements StateMethods {
     	optionsButton.setVisible(true);
     	exitButton.setVisible(true);
     	storyButton.setVisible(true);
-    	howToPlayButton.setVisible(true);
+    	helpButton.setVisible(true);
 	}
 
 	private void createButtons() {
@@ -112,7 +164,7 @@ public class Menu implements StateMethods {
 		optionsButton = new JButton("OPTIONS");
 		storyButton = new JButton("STORY");
 		exitButton = new JButton("EXIT");
-		howToPlayButton = new JButton("?");
+		helpButton = new JButton("?");
 		
 		playButton.setForeground(Color.WHITE);
 		playButton.setFont(font);
@@ -138,13 +190,11 @@ public class Menu implements StateMethods {
 		exitButton.setContentAreaFilled(false);
 		exitButton.setBorderPainted(false);
 		
-		howToPlayButton.setForeground(Color.WHITE);
-		howToPlayButton.setFont(font);
-		howToPlayButton.setOpaque(false);
-		howToPlayButton.setContentAreaFilled(false);
-		howToPlayButton.setBorderPainted(false);
-
-		
+		helpButton.setForeground(Color.WHITE);
+		helpButton.setFont(font);
+		helpButton.setOpaque(false);
+		helpButton.setContentAreaFilled(false);
+		helpButton.setBorderPainted(false);		
 	}
 
 	@Override
