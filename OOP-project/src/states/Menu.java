@@ -23,7 +23,6 @@ public class Menu implements StateMethods {
 	private Game game;
 	public static JButton playButton, optionsButton, storyButton, helpButton, exitButton;
 	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
-	
 	private BufferedImage backgroundImage;
 	
 	public Menu(Game game) {
@@ -36,98 +35,42 @@ public class Menu implements StateMethods {
 	public void update() {
 		showButtons();
 		playButtonAction();
-		helpButtonAction();
-		exitButtonAction();
 		storyButtonAction();
 		optionsButtonAction();
-	}
-	
-	private void optionsButtonAction() {
-        optionsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	Gamestate.state = Gamestate.OPTIONS;
-            	Options.exitButton.setVisible(true);
-            	hideButtons();
-            }
-        });
-		
-	}
-
-	private void storyButtonAction() {
-        storyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	Gamestate.state = Gamestate.STORY;
-            	Story.exitButton.setVisible(true);
-            	hideButtons();
-            }
-        });
-	}
-
-	private void exitButtonAction() {
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	System.exit(0);
-            }
-        });
-	}
-
-	private void helpButtonAction() {
-        helpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	Gamestate.state = Gamestate.HELP;
-            	Help.exitButton.setVisible(true);
-            	hideButtons();
-            }
-        });
-	}
-
-	private void playButtonAction() {
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	Gamestate.state = Gamestate.PLAYING;
-            	hideButtons();
-            }
-        });
+		exitButtonAction();
+		helpButtonAction();
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		
-		g.drawImage(backgroundImage, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+
 		String gameTitle1 = "Catticus:";
 		String gameTitle2 = "The Adventures";
 		String gameTitle3 = "of a Hungry Cat";
-        
-        
-        // Getting size of text
+
+        // Getting size of text & setting position
         FontMetrics fm = g.getFontMetrics(font);
         int textWidth1 = fm.stringWidth(gameTitle1);
         int textWidth2 = fm.stringWidth(gameTitle2);
         int textWidth3 = fm.stringWidth(gameTitle3);
         int textHeight = fm.getHeight();
-
-        // Positions to center the text
 		int x1 = (Game.GAME_WIDTH - textWidth1) / 2;
 		int x2 = (Game.GAME_WIDTH - textWidth2) / 2;
 		int x3 = (Game.GAME_WIDTH - textWidth3) / 2;
 		int y = (Game.GAME_HEIGHT - textHeight) / 2 - (int)(75 * Game.SCALE);
 
-        // Setting font & color
+        // Drawing background
+		g.drawImage(backgroundImage, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		g.setColor(new Color(0,0,0,150));
+		g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+
+		// Drawing text & buttons
 		g.setColor(Color.WHITE);
 		g.setFont(font);
-
-        // Draw text
         g.drawString(gameTitle1, x1, y);
         g.drawString(gameTitle2, x2, y + (int)(15 * Game.SCALE));
         g.drawString(gameTitle3, x3, y + (int)(30 * Game.SCALE));
-        
         drawButtons(g);
-		
 	}
 	
 	private void drawButtons(Graphics g) {
@@ -165,72 +108,109 @@ public class Menu implements StateMethods {
 		storyButton = new JButton("STORY");
 		exitButton = new JButton("EXIT");
 		helpButton = new JButton("?");
-		
+
 		playButton.setForeground(Color.WHITE);
 		playButton.setFont(font);
 		playButton.setOpaque(false);
 		playButton.setContentAreaFilled(false);
 		playButton.setBorderPainted(false);
-		
+
 		optionsButton.setForeground(Color.WHITE);
 		optionsButton.setFont(font);
 		optionsButton.setOpaque(false);
 		optionsButton.setContentAreaFilled(false);
 		optionsButton.setBorderPainted(false);
-		
+
 		storyButton.setForeground(Color.WHITE);
 		storyButton.setFont(font);
 		storyButton.setOpaque(false);
 		storyButton.setContentAreaFilled(false);
 		storyButton.setBorderPainted(false);
-		
+
 		exitButton.setForeground(Color.WHITE);
 		exitButton.setFont(font);
 		exitButton.setOpaque(false);
 		exitButton.setContentAreaFilled(false);
 		exitButton.setBorderPainted(false);
-		
+
 		helpButton.setForeground(Color.WHITE);
 		helpButton.setFont(font);
 		helpButton.setOpaque(false);
 		helpButton.setContentAreaFilled(false);
-		helpButton.setBorderPainted(false);		
+		helpButton.setBorderPainted(false);
+	}
+
+	private void playButtonAction() {
+		playButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Gamestate.state = Gamestate.PLAYING;
+				Playing.pauseButton.setVisible(true);
+				hideButtons();
+			}
+		});
+	}
+
+	private void storyButtonAction() {
+		storyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Gamestate.state = Gamestate.STORY;
+				Story.exitButton.setVisible(true);
+				hideButtons();
+			}
+		});
+	}
+
+	private void optionsButtonAction() {
+		optionsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Gamestate.state = Gamestate.OPTIONS;
+				Options.exitButton.setVisible(true);
+				hideButtons();
+			}
+		});
+
+	}
+
+	private void exitButtonAction() {
+		exitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+	}
+
+	private void helpButtonAction() {
+		helpButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Gamestate.state = Gamestate.HELP;
+				Help.exitButton.setVisible(true);
+				hideButtons();
+			}
+		});
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseMoved(MouseEvent e) {}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE)
-			Gamestate.state = Gamestate.PLAYING;
-		
-	}
+	public void keyPressed(KeyEvent e) {}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 }

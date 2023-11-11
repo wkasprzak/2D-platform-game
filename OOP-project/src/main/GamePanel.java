@@ -7,10 +7,7 @@ import javax.swing.JPanel;
 
 import input.KeyboardInput;
 import input.MouseInput;
-import states.Help;
-import states.Menu;
-import states.Options;
-import states.Story;
+import states.*;
 
 import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
@@ -35,6 +32,14 @@ public class GamePanel extends JPanel {
 		add(Help.exitButton);
 		add(Story.exitButton);
 		add(Options.exitButton);
+		add(Options.soundButton);
+		add(Options.musicButton);
+		add(Playing.pauseButton);
+		add(Pause.returnToMenuButton);
+		add(Pause.restartButton);
+		add(Pause.goBackButton);
+		add(Pause.musicButton);
+		add(Pause.soundButton);
 	}
 
 	private void setSize() {

@@ -89,7 +89,7 @@ public class Player extends Entity{
 
 	public void draw(Graphics g) {
 		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
-		drawHitbox(g);
+		//drawHitbox(g);
 	}
 	
 	public void update() {

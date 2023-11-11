@@ -9,13 +9,14 @@ import states.Menu;
 import states.Options;
 import states.Playing;
 import states.Story;
+import states.Pause;
 
 public class Game implements Runnable {
 	
 	// Game thread
 	private Thread gameThread;
 	private final int FPS = 120;
-	public static int UPS = 200;
+	public final int UPS = 200;
 	
 	// Game states
 	private Playing playing;
@@ -23,7 +24,7 @@ public class Game implements Runnable {
 	private Help help;
 	private Story story;
 	private Options options;
-	// TO DO: ADD PAUSE STATE
+	private Pause pause;
 	
 	// Game window
 	private GameWindow gameWindow;
@@ -37,6 +38,10 @@ public class Game implements Runnable {
 	public static int NUMBER_OF_TILES_IN_WIDTH = 25;
 	public static int GAME_HEIGHT = TILES_SIZE * NUMBER_OF_TILES_IN_HEIGHT;
 	public static int GAME_WIDTH = TILES_SIZE * NUMBER_OF_TILES_IN_WIDTH;
+
+	// Music & sound
+	private static boolean music = true;
+	private static boolean sound = true;
 	
 	public Game() {	
 		initStates();
@@ -57,6 +62,7 @@ public class Game implements Runnable {
 		help = new Help(this);
 		story = new Story(this);
 		options = new Options(this);
+		pause = new Pause(this);
 	}
 
 	private void startGameLoop() {
@@ -81,6 +87,9 @@ public class Game implements Runnable {
 		case PLAYING:
 			playing.draw(g);
 			break;
+		case PAUSE:
+			pause.draw(g);
+			break;
 		default:
 			System.exit(0);
 			break;
@@ -103,6 +112,9 @@ public class Game implements Runnable {
 			break;
 		case PLAYING:
 			playing.update();
+			break;
+		case PAUSE:
+			pause.update();
 			break;
 		default:
 			break;
@@ -159,5 +171,20 @@ public class Game implements Runnable {
 	public Menu getMenu() {
 		return menu;
 	}
-	
+
+	public static boolean isMusic() {
+		return music;
+	}
+
+	public static void setMusic(boolean music) {
+		Game.music = music;
+	}
+
+	public static boolean isSound() {
+		return sound;
+	}
+
+	public static void setSound(boolean sound) {
+		Game.sound = sound;
+	}
 }
