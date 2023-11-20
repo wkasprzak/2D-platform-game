@@ -59,7 +59,7 @@ public class Pause implements StateMethods {
         soundButton.setBounds(Game.GAME_WIDTH/2 - (int)(50 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(5 * Game.SCALE), (int)(100 * Game.SCALE),(int)(15 * Game.SCALE));
         soundButton.printComponents(g);
 
-        goBackButton.setBounds(Game.GAME_WIDTH/2 - (int)(90 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(60 * Game.SCALE),(int)(60 * Game.SCALE),(int)(15 * Game.SCALE));
+        goBackButton.setBounds(Game.GAME_WIDTH/2 - (int)(120 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(60 * Game.SCALE),(int)(100 * Game.SCALE),(int)(15 * Game.SCALE));
         goBackButton.printComponents(g);
         returnToMenuButton.setBounds(Game.GAME_WIDTH/2 - (int)(30 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(60 * Game.SCALE),(int)(60 * Game.SCALE),(int)(15 * Game.SCALE));
         returnToMenuButton.printComponents(g);
@@ -86,7 +86,7 @@ public class Pause implements StateMethods {
     private void createButtons() {
         returnToMenuButton = new JButton("MENU");
         restartButton = new JButton("RESTART");
-        goBackButton = new JButton("PLAY");
+        goBackButton = new JButton("RETURN");
         musicButton = new JButton("MUSIC");
         soundButton = new JButton("SOUND");
 

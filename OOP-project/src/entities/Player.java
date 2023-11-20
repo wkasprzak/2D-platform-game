@@ -87,8 +87,8 @@ public class Player extends Entity{
 		animationIndex = 0;
 	}
 
-	public void draw(Graphics g) {
-		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
+	public void draw(Graphics g, int offset) {
+		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) - offset + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
 		//drawHitbox(g);
 	}
 	

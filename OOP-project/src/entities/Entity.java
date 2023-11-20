@@ -76,7 +76,8 @@ public abstract class Entity {
 	
 	protected static boolean solidBlock(float x, float y, int[][] levelData) {
 		// Checking if in window
-		if(x < 0 || x >= Game.GAME_WIDTH) return true;
+		int maxLevelWidth = levelData[0].length * Game.TILES_SIZE;
+		if(x < 0 || x >= maxLevelWidth) return true;
 		if(y < 0 || y >= Game.GAME_HEIGHT) return true;
 		
 		// Finding position

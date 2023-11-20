@@ -4,19 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6317a80-cb97-4b3a-b03c-5662deda5643" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/states/Pause.java" afterDir="false" />
+    <list default="true" id="b6317a80-cb97-4b3a-b03c-5662deda5643" name="Changes" comment="Added pause screen &amp; buttons">
+      <change afterPath="$PROJECT_DIR$/res/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/big_clouds.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/clouds.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/grass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/mountains.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/plains.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/small_clouds.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/clouds1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/clouds2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/levels/1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/1.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Gamestate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Gamestate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Help.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Options.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/levels/LevelHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/levels/LevelHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/Pause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Pause.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/Playing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Playing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/StateMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/StateMethods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Story.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Import.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Import.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +64,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kaspr\github-classroom\dataproctech\long-term-project-wkasprzak\OOP-project\res" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
@@ -81,12 +91,35 @@
       <workItem from="1699465471378" duration="183000" />
       <workItem from="1699623808687" duration="181000" />
       <workItem from="1699697172795" duration="2837000" />
-      <workItem from="1699704155868" duration="7911000" />
+      <workItem from="1699704155868" duration="8265000" />
+      <workItem from="1699717461108" duration="2000" />
+      <workItem from="1699906981825" duration="283000" />
+      <workItem from="1699971028513" duration="4983000" />
+      <workItem from="1699986255010" duration="4768000" />
+      <workItem from="1699994742087" duration="1375000" />
+      <workItem from="1700040074183" duration="2000" />
+      <workItem from="1700224868930" duration="596000" />
+      <workItem from="1700230860713" duration="377000" />
+      <workItem from="1700382640175" duration="61000" />
+      <workItem from="1700506727754" duration="77000" />
     </task>
+    <task id="LOCAL-00001" summary="Added pause screen &amp; buttons">
+      <option name="closed" value="true" />
+      <created>1699715006551</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699715006551</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added pause screen &amp; buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pause screen &amp; buttons" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
