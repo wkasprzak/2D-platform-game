@@ -1,8 +1,8 @@
 package entities;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
 import main.Game;
 import utils.Import;
 
@@ -15,15 +15,8 @@ public class Player extends Entity{
 	private boolean moving = false, attacking = false;
 	private boolean left, right, jump;
 	private int facedRight = 1, flipX = 0; // Changing the appearance of the character depending on the direction
-	private float playerSpeed = 1.0f * Game.SCALE;
-	
-	// Jumping && Falling
-	private float airSpeed = 0f;
-	private float gravity = 0.04f * Game.SCALE;
-	private float jumpSpeed = -2.25f * Game.SCALE;
-	private float fallSpeed = 0.5f * Game.SCALE;
-	private boolean inAir = false;
-	
+	protected float playerSpeed = 1.0f * Game.SCALE;
+
 	// Hitbox
 	private float minimalisationX = 9 * Game.SCALE;
 	private float minimalisationY = 17 * Game.SCALE;
@@ -57,16 +50,29 @@ public class Player extends Entity{
 			return 1;
 		}
 	}
-		
+
+	// HP system
+	private BufferedImage[] life;
+	private int HP_WIDTH = (int)(33 * Game.SCALE);
+	private int HP_HEIGHT = (int)(11 * Game.SCALE);
+
+	// Attackbox
+	private Rectangle2D.Float attackBox;
+
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		this.state = IDLE;
-		this.maxHealth = 100;
+		this.maxHealth = 6;
 		this.currentHealth = maxHealth;
 		loadGraphics();
 		initHitbox(15 * Game.SCALE, 14 * Game.SCALE);
+		initAttackBox();
 	}
-		
+
+	private void initAttackBox() {
+		attackBox = new Rectangle2D.Float(x,y,(int)(20 * Game.SCALE), (int)(14 * Game.SCALE));
+	}
+
 	private void setAction() {
 		int startState = state;
 		if(moving)
@@ -78,6 +84,9 @@ public class Player extends Entity{
 			if(airSpeed < 0) state = JUMPING;
 			else state = FALLING;
 		}
+
+		if(attacking)
+			state = ATTACK;
 		
 		if(startState != state) resetAnimation();
 	}
@@ -89,15 +98,39 @@ public class Player extends Entity{
 
 	public void draw(Graphics g, int offset) {
 		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) - offset + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
-		//drawHitbox(g);
+		//drawHitbox(g, offset);
+		drawAttackBox(attackBox, g, offset);
+		drawHP(g);
 	}
-	
+
+	private void drawHP(Graphics g) {
+		g.drawImage(life[6 - currentHealth],(int)(10 * Game.SCALE), (int)(5 * Game.SCALE),(int)(HP_WIDTH * 1.5),(int)(HP_HEIGHT * 1.5),null);
+	}
+
 	public void update() {
+		updateAttackBox();
 		changePosition();
 		updateAnimationCounter();
 		setAction();	
 	}
-	
+
+	private void updateAttackBox() {
+		if(right) {
+			attackBox.x = hitbox.x + hitbox.width / 2;
+		} else if(left) {
+			attackBox.x = hitbox.x - hitbox.width / 2 - (int)(5 * Game.SCALE);
+		}
+		attackBox.y = hitbox.y + (int)(1 * Game.SCALE);
+	}
+
+	private void changeHP(int damage) {
+		currentHealth += damage;
+		if(currentHealth <= 0) {
+			currentHealth = 0;
+		} else if(currentHealth >= maxHealth)
+			currentHealth = maxHealth;
+	}
+
 	private void updateAnimationCounter() {
 		// Animation counter decides which sprite should be shown
 		animationCounter++;
@@ -106,6 +139,7 @@ public class Player extends Entity{
 			animationIndex++;
 			if(animationIndex >= howManyPics(state)) {
 				animationIndex = 0;
+				attacking = false;
 			}
 		}
 	}
@@ -118,7 +152,7 @@ public class Player extends Entity{
 			airSpeed = jumpSpeed;
 		}
 				
-		if(!inAir && ((!left && !right) || (right && left))) return;		
+		if(!inAir && ((!left && !right) || (right && left))) return;
 
 		float speed = 0;
 		
@@ -171,6 +205,11 @@ public class Player extends Entity{
 		for(int i = 0; i < charactersAppearance.length; i++)
 			for(int j = 0; j < charactersAppearance[i].length; j++)
 				charactersAppearance[i][j] = image.getSubimage(j*32, i*32, 32, 32);
+
+		BufferedImage imageHP = Import.ImportData(Import.HP);
+		life = new BufferedImage[7];
+		for(int i = 0; i < life.length; i++)
+			life[i] = imageHP.getSubimage(0, i * 11, 33, 11);
 	}
 	
 	public void loadLevelData(int[][] levelData) {
@@ -202,4 +241,7 @@ public class Player extends Entity{
 		this.jump = jump;
 	}
 
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
+	}
 }

@@ -5,16 +5,19 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Warthog;
 import states.Gamestate;
 import main.Game;
 import utils.Import;
+
+import static utils.Enemies.WARTHOG;
 
 public class LevelHandler {
 
 	private Game game;
 	private BufferedImage[] levelTiles;
-	private ArrayList<Level> levels;
-	private int levelIndex = 0;
+	private static ArrayList<Level> levels;
+	private static int levelIndex = 0;
 	
 	public LevelHandler(Game game) {
 		this.game = game;
@@ -43,12 +46,23 @@ public class LevelHandler {
 
 	private void importTileset() {
 		BufferedImage image = Import.ImportData(Import.TILES);
-		levelTiles = new BufferedImage[30];
+		levelTiles = new BufferedImage[32];
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 6; j++) {
 				levelTiles[i*6 + j] = image.getSubimage(j*16, i*16, 16, 16);
 			}
 		}
+	}
+
+	public static ArrayList<Warthog> getWarthogs() {
+		ArrayList<Warthog> list = new ArrayList<>();
+		for(int i = 0; i < Game.NUMBER_OF_TILES_IN_HEIGHT; i++) {
+			for(int j = 0; j < levels.get(levelIndex).getLevelData()[i].length; j++) {
+				if(levels.get(levelIndex).getTileIndex(j, i) == WARTHOG)
+					list.add(new Warthog(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
+			}
+		}
+		return list;
 	}
 
 	public void draw(Graphics g, int offset) {

@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import entities.Enemies;
 import entities.Player;
 import levels.LevelHandler;
 import main.Game;
@@ -18,6 +19,7 @@ public class Playing implements StateMethods {
 
 	private Game game;
 	private Player player;
+	private Enemies enemies;
 	private LevelHandler levelHandler;
 	private Pause pause;
 
@@ -85,6 +87,7 @@ public class Playing implements StateMethods {
 	
 	private void initClasses() {
 		levelHandler = new LevelHandler(game);
+		enemies = new Enemies(this);
 		pause = new Pause(game);
 		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE));
 		player.loadLevelData(levelHandler.getCurrentLevel().getLevelData());
@@ -94,6 +97,7 @@ public class Playing implements StateMethods {
 	public void update() {
 		if(!paused) {
 			player.update();
+			enemies.update(levelHandler.getCurrentLevel().getLevelData(), player);
 			pauseButtonAction();
 			ifPosCloseToWindowEnd();
 		}
@@ -117,6 +121,7 @@ public class Playing implements StateMethods {
 	public void draw(Graphics g) {
 		drawBackground(g, offset);
 		levelHandler.draw(g, offset);
+		enemies.draw(g, offset);
 		player.draw(g, offset);
 		pauseButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		pauseButton.printComponents(g);

@@ -24,6 +24,9 @@ public class Import {
     public static final String MOUNTAINS = "/mountains.png";
     public static final String PLAINS = "/plains.png";
     public static final String GRASS = "/grass.png";
+    public static final String HP = "/hp.png";
+    public static final String FISH = "/fish.png";
+    public static final String WARTHOG = "/warthog.png";
 
 	public static BufferedImage ImportData(String fileName) {		
 		BufferedImage image = null;

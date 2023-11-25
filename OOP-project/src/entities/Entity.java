@@ -21,6 +21,22 @@ public abstract class Entity {
 	protected int state;
 	protected int animationIndex, animationCounter; // Needed for animation
 	protected static int ANIMATION_SPEED = 25;
+
+	// Moving
+	protected float entitySpeed = 0.7f * Game.SCALE;
+
+	// Jumping && Falling
+	protected float airSpeed = 0f;
+	protected float fallSpeed = 0.5f * Game.SCALE;
+	protected float gravity = 0.04f * Game.SCALE;
+	protected float jumpSpeed = -2.25f * Game.SCALE;
+	protected boolean inAir = false;
+
+	// Directions
+	public static final int LEFT = 0;
+	public static final int UP = 1;
+	public static final int RIGHT = 2;
+	public static final int DOWN = 3;
 	
 	public Entity(float x, float y, int width, int height) {
 		this.x = x;
@@ -30,15 +46,20 @@ public abstract class Entity {
 	}
 	
 	// Debugging only
-	protected void drawHitbox(Graphics g) {	
+	protected void drawHitbox(Graphics g, int offset) {
 		g.setColor(Color.BLACK);
-		g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+		g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 	}
 	
 	protected void initHitbox(float width, float height) {
 		hitbox = new Rectangle2D.Float(x, y, width, height);
 	}
-	
+
+	protected void drawAttackBox(Rectangle2D.Float attackBox, Graphics g, int offset) {
+		g.setColor(Color.RED);
+		g.drawRect((int)attackBox.x - offset, (int)attackBox.y,(int)attackBox.width,(int)attackBox.height);
+	}
+
 	protected static float getCloserToWall(Rectangle2D.Float hitbox, float speed) {
 		int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
 		if (speed > 0) {
@@ -86,7 +107,7 @@ public abstract class Entity {
 		int lvlData = levelData[(int)yPos][(int)xPos];
 		
 		// Looking if block on position is solidBlock (according to tileset)
-		if(lvlData < 0 || lvlData > 29 || lvlData != 5) return true;
+		if(lvlData < 0 || lvlData > 31 || (lvlData != 5 && lvlData != 31)) return true;
 		
 		return false;
 	}
@@ -97,14 +118,34 @@ public abstract class Entity {
 					return false;
 		return true;
 	}
-	
-	
+
+	protected static boolean floor(Rectangle2D.Float hitbox, float speed, int[][] levelData) {
+		if(speed > 0)
+			return solidBlock(hitbox.x + hitbox.width + speed, hitbox.y + hitbox.height + 1, levelData);
+		else return solidBlock(hitbox.x + speed, hitbox.y + hitbox.height + 1, levelData);
+	}
+
+	protected boolean noObstacle(int[][] levelData, Rectangle2D.Float hitbox, Rectangle2D.Float hitbox1, int height) {
+		int firstX = (int)(hitbox.x / Game.TILES_SIZE);
+		int secondX = (int)(hitbox1.x / Game.TILES_SIZE);
+		if(firstX > secondX)
+			return tilesAreWalkable(secondX, firstX, height, levelData);
+		else
+			return tilesAreWalkable(firstX, secondX, height, levelData);
+	}
+
+	protected boolean tilesAreWalkable(int start, int end, int height, int[][] levelData) {
+		for (int i = 0; i < end - start; i++){
+			if(solidBlock(start + i, height, levelData))
+				return false;
+			if(!solidBlock(start + i, y + 1, levelData))
+				return false;
+		}
+		return true;
+	}
+
 	public Rectangle2D.Float getHitbox() {
 		return hitbox;
-	}
-	
-	public int getState() {
-		return state;
 	}
 	
 	public int getAnimationIndex() {
