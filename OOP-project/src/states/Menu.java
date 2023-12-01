@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,13 +23,15 @@ import main.GameWindow.*;
 public class Menu implements StateMethods {
 
 	private Game game;
-	public static JButton playButton, optionsButton, storyButton, helpButton, exitButton;
-	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
 	private BufferedImage backgroundImage;
-	
+	public static JButton playButton, optionsButton, storyButton, helpButton, exitButton;
+
+	// Font
+	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
+
 	public Menu(Game game) {
 		this.game = game;
-		backgroundImage = Import.ImportData(Import.MENU_BACKGROUND_IMAGE);
+		backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
 		createButtons();
 	}
 
@@ -44,6 +48,7 @@ public class Menu implements StateMethods {
 	@Override
 	public void draw(Graphics g) {
 
+		// Menu text
 		String gameTitle1 = "Catticus:";
 		String gameTitle2 = "The Adventures";
 		String gameTitle3 = "of a Hungry Cat";
@@ -85,7 +90,7 @@ public class Menu implements StateMethods {
 		helpButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		helpButton.printComponents(g);
 	}
-	
+
 	private void hideButtons() {
     	playButton.setVisible(false);
     	optionsButton.setVisible(false);
@@ -193,20 +198,6 @@ public class Menu implements StateMethods {
 			}
 		});
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {}

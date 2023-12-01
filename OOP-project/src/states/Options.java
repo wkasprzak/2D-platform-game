@@ -24,7 +24,7 @@ public class Options implements StateMethods {
 	
 	public Options(Game game) {
 		this.game = game;
-		backgroundImage = Import.ImportData(Import.MENU_BACKGROUND_IMAGE);
+		backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
 		createButtons();
 		
 	}
@@ -32,7 +32,7 @@ public class Options implements StateMethods {
 	@Override
 	public void update() {
 		showButtons();
-		exitBittonAction();
+		exitButtonAction();
 		soundButtonAction();
 		musicButtonAction();
 	}
@@ -104,7 +104,7 @@ public class Options implements StateMethods {
 		exitButton.printComponents(g);
 	}
 
-	private void exitBittonAction() {
+	private void exitButtonAction() {
 		exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -146,30 +146,6 @@ public class Options implements StateMethods {
 				musicButton.repaint(); // To make it faster
 			}
 		});
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

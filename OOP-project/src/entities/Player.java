@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import main.Game;
+import states.Playing;
 import utils.Import;
 
 public class Player extends Entity{
@@ -19,10 +20,13 @@ public class Player extends Entity{
 
 	// Hitbox
 	private float minimalisationX = 9 * Game.SCALE;
-	private float minimalisationY = 17 * Game.SCALE;
+	private float minimalisationY = 16 * Game.SCALE;
 	
 	// Level
 	private int[][] levelData;
+
+	private boolean attackChecked;
+	private Playing playing;
 	
 	// Number of row of Cat-Sheet.png in which state occurs 
 	private static final int IDLE = 0;
@@ -31,7 +35,7 @@ public class Player extends Entity{
 	private static final int FALLING = 20;
 	private static final int ATTACK = 39;
 	private static final int HIT = 52;
-	private static final int DEAD = 53; 
+	public static final int DEAD = 53;
 	
 	// How many different looks state has
 	private static int howManyPics(int player_action) {
@@ -59,35 +63,28 @@ public class Player extends Entity{
 	// Attackbox
 	private Rectangle2D.Float attackBox;
 
-	public Player(float x, float y, int width, int height) {
+	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
+		this.playing = playing;
 		this.state = IDLE;
 		this.maxHealth = 6;
 		this.currentHealth = maxHealth;
+		attackBox = new Rectangle2D.Float(x,y,(int)(20 * Game.SCALE), (int)(16 * Game.SCALE));
 		loadGraphics();
-		initHitbox(15 * Game.SCALE, 14 * Game.SCALE);
-		initAttackBox();
-	}
-
-	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x,y,(int)(20 * Game.SCALE), (int)(14 * Game.SCALE));
+		initHitbox(x,y,(int)(15 * Game.SCALE), (int)(16 * Game.SCALE));
 	}
 
 	private void setAction() {
 		int startState = state;
-		if(moving)
-			state = RUNNING;
-		else 
-			state = IDLE;
+		if(moving) state = RUNNING;
+		else state = IDLE;
 		
 		if(inAir) {
 			if(airSpeed < 0) state = JUMPING;
 			else state = FALLING;
 		}
 
-		if(attacking)
-			state = ATTACK;
-		
+		if(attacking) state = ATTACK;
 		if(startState != state) resetAnimation();
 	}
 	
@@ -99,7 +96,7 @@ public class Player extends Entity{
 	public void draw(Graphics g, int offset) {
 		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) - offset + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
 		//drawHitbox(g, offset);
-		drawAttackBox(attackBox, g, offset);
+		//drawAttackBox(attackBox, g, offset);
 		drawHP(g);
 	}
 
@@ -108,22 +105,31 @@ public class Player extends Entity{
 	}
 
 	public void update() {
+		if(currentHealth <= 0) {
+			playing.setGameOver(true);
+			return;
+		}
 		updateAttackBox();
 		changePosition();
+		if(attacking) checkAttack();
 		updateAnimationCounter();
 		setAction();	
 	}
 
-	private void updateAttackBox() {
-		if(right) {
-			attackBox.x = hitbox.x + hitbox.width / 2;
-		} else if(left) {
-			attackBox.x = hitbox.x - hitbox.width / 2 - (int)(5 * Game.SCALE);
-		}
-		attackBox.y = hitbox.y + (int)(1 * Game.SCALE);
+	private void checkAttack() {
+		if(attackChecked || animationIndex != 2) return;
+		attackChecked = true;
+		playing.checkIfEnemyWasHurt(attackBox);
 	}
 
-	private void changeHP(int damage) {
+	private void updateAttackBox() {
+		if(right) attackBox.x = hitbox.x + hitbox.width / 2;
+		else if(left) attackBox.x = hitbox.x - hitbox.width / 2 - (int)(5 * Game.SCALE);
+		attackBox.y = hitbox.y + 1;
+	}
+
+	// HP system
+	protected void changeHP(int damage) {
 		currentHealth += damage;
 		if(currentHealth <= 0) {
 			currentHealth = 0;
@@ -140,6 +146,7 @@ public class Player extends Entity{
 			if(animationIndex >= howManyPics(state)) {
 				animationIndex = 0;
 				attacking = false;
+				attackChecked = false;
 			}
 		}
 	}
@@ -168,9 +175,10 @@ public class Player extends Entity{
 			facedRight = 1;
 			flipX = 0;
 		}
-		
-		if(!isOnFloor(hitbox, levelData) && !inAir)
-			inAir = true;
+
+		if (!inAir)
+			if (!isOnFloor(hitbox, levelData))
+				inAir = true;
 		
 		if(inAir) {
 			if(isPossibleToMove(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
@@ -195,18 +203,15 @@ public class Player extends Entity{
 		else hitbox.x = getCloserToWall(hitbox, speed);
 	}
 
-	private void changeHealth(int value) {
-		
-	}
-
+	// Level data & graphics
 	private void loadGraphics() {
-		BufferedImage image = Import.ImportData(Import.PLAYER);
+		BufferedImage image = Import.importImage(Import.PLAYER);
 		charactersAppearance = new BufferedImage[51][8];
 		for(int i = 0; i < charactersAppearance.length; i++)
 			for(int j = 0; j < charactersAppearance[i].length; j++)
 				charactersAppearance[i][j] = image.getSubimage(j*32, i*32, 32, 32);
 
-		BufferedImage imageHP = Import.ImportData(Import.HP);
+		BufferedImage imageHP = Import.importImage(Import.HP);
 		life = new BufferedImage[7];
 		for(int i = 0; i < life.length; i++)
 			life[i] = imageHP.getSubimage(0, i * 11, 33, 11);
@@ -217,31 +222,33 @@ public class Player extends Entity{
 		if(!isOnFloor(hitbox, levelData)) inAir = true;
 	}
 
-	public boolean isLeft() {
-		return left;
-	}
+	// Getters & setters
+	public void setLeft(boolean left) {this.left = left;}
 
-	public void setLeft(boolean left) {
-		this.left = left;
-	}
+	public void setRight(boolean right) {this.right = right;}
 
-	public boolean isRight() {
-		return right;
-	}
+	public void setJump(boolean jump) {this.jump = jump;}
 
-	public void setRight(boolean right) {
-		this.right = right;
-	}
+	public void setAttacking(boolean attacking) {this.attacking = attacking;}
 
-	public boolean isJump() {
-		return jump;
-	}
+	public void resetAll() {
+		moving = false;
+		attacking = false;
+		left = false;
+		right = false;
+		jump = false;
+		inAir = false;
+		facedRight = 1;
+		flipX = 0;
+		state = IDLE;
+		currentHealth = maxHealth;
 
-	public void setJump(boolean jump) {
-		this.jump = jump;
-	}
+		hitbox.x = x;
+		hitbox.y = y;
+		attackBox.x = x;
+		attackBox.y = y;
 
-	public void setAttacking(boolean attacking) {
-		this.attacking = attacking;
+		if(!isOnFloor(hitbox, levelData))
+			inAir = true;
 	}
 }

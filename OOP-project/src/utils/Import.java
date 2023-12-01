@@ -14,7 +14,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 public class Import {
-	
+
+    // Resources names
 	public static final String PLAYER = "/Cat-Sheet.png";
 	public static final String TILES = "/tileset_forest.png";
 	public static final String MENU_BACKGROUND_IMAGE = "/background_menu.png";
@@ -28,7 +29,8 @@ public class Import {
     public static final String FISH = "/fish.png";
     public static final String WARTHOG = "/warthog.png";
 
-	public static BufferedImage ImportData(String fileName) {		
+    // Importing images
+	public static BufferedImage importImage(String fileName) {
 		BufferedImage image = null;
 		InputStream is = Import.class.getResourceAsStream(fileName);
 		try {
@@ -44,7 +46,8 @@ public class Import {
 		}
 		return image;
 	}
-	
+
+    // Data from CSV file
     public static List<int[][]> importCSVData() {
         
     	URL url = Import.class.getResource("/levels");

@@ -62,7 +62,7 @@ public class Game implements Runnable {
 		help = new Help(this);
 		story = new Story(this);
 		options = new Options(this);
-		pause = new Pause(this);
+		pause = new Pause(this, playing);
 	}
 
 	private void startGameLoop() {

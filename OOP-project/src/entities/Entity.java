@@ -27,7 +27,7 @@ public abstract class Entity {
 
 	// Jumping && Falling
 	protected float airSpeed = 0f;
-	protected float fallSpeed = 0.5f * Game.SCALE;
+	protected float fallSpeed = 0.5f * Game.SCALE;;
 	protected float gravity = 0.04f * Game.SCALE;
 	protected float jumpSpeed = -2.25f * Game.SCALE;
 	protected boolean inAir = false;
@@ -51,7 +51,7 @@ public abstract class Entity {
 		g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 	}
 	
-	protected void initHitbox(float width, float height) {
+	protected void initHitbox(float x, float y, float width, float height) {
 		hitbox = new Rectangle2D.Float(x, y, width, height);
 	}
 
@@ -76,9 +76,7 @@ public abstract class Entity {
 		int currentTile = (int) (hitbox.y / Game.TILES_SIZE);
 		if (airSpeed > 0) {
 			// Falling - touching floor
-			int tileY = currentTile * Game.TILES_SIZE;
-			int yOffset = (int) (Game.TILES_SIZE - hitbox.height);
-			return tileY + yOffset - 1;
+			return currentTile * Game.TILES_SIZE + hitbox.height - 1;
 		} else
 			// Jumping
 			return currentTile * Game.TILES_SIZE;
@@ -87,11 +85,11 @@ public abstract class Entity {
 	
 	protected static boolean isPossibleToMove(float x, float y, float width, float height, int[][] levelData) {
 		// Checking if any part of character overlaps block
-		if(!solidBlock(x, y, levelData))
-			if(!solidBlock(x + width, y, levelData))
-				if(!solidBlock(x, y + height, levelData))
-					if(!solidBlock(x + width, y + height, levelData))
-						return true;	
+		if (!solidBlock(x, y, levelData))
+			if (!solidBlock(x + width, y + height, levelData))
+				if (!solidBlock(x + width, y, levelData))
+					if (!solidBlock(x, y + height, levelData))
+						return true;
 		return false;
 	}
 	
@@ -122,7 +120,8 @@ public abstract class Entity {
 	protected static boolean floor(Rectangle2D.Float hitbox, float speed, int[][] levelData) {
 		if(speed > 0)
 			return solidBlock(hitbox.x + hitbox.width + speed, hitbox.y + hitbox.height + 1, levelData);
-		else return solidBlock(hitbox.x + speed, hitbox.y + hitbox.height + 1, levelData);
+		else
+			return solidBlock(hitbox.x + speed, hitbox.y + hitbox.height + 1, levelData);
 	}
 
 	protected boolean noObstacle(int[][] levelData, Rectangle2D.Float hitbox, Rectangle2D.Float hitbox1, int height) {

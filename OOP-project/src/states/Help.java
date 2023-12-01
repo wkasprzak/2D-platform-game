@@ -15,15 +15,16 @@ import utils.Import;
 public class Help implements StateMethods {
 	
 	private Game game;
+	private BufferedImage backgroundImage;
 	public static JButton exitButton;
+
+	// Fonts
 	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
 	private Font font1 = new Font("STENCIL", Font.PLAIN, (int)(10 * Game.SCALE));
 	
-	private BufferedImage backgroundImage;
-	
 	public Help(Game game) {
 		this.game = game;
-		backgroundImage = Import.ImportData(Import.MENU_BACKGROUND_IMAGE);
+		backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
 		createExitButton();
 	}
 
@@ -40,6 +41,7 @@ public class Help implements StateMethods {
 
 	@Override
 	public void draw(Graphics g) {
+		// Text of instructions
 		String title = "Instructions";
 		String line1 = "How to play the game?";
 		String line2 = "    -> Use 'A' and 'D' to move left/right";
@@ -84,22 +86,6 @@ public class Help implements StateMethods {
 	private void drawExitButton(Graphics g) {
 		exitButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2 + (int)(60 * Game.SCALE),(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		exitButton.printComponents(g);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
 	}
 
 	@Override

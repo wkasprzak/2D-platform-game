@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import entities.Enemies;
@@ -22,10 +23,11 @@ public class Playing implements StateMethods {
 	private Enemies enemies;
 	private LevelHandler levelHandler;
 	private Pause pause;
+	private GameOver gameOverScreen;
 
 	// Pause button
 	private final Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
-	public static boolean paused = false;
+	public boolean paused = false;
 	public static JButton pauseButton;
 
 	// Levels longer than window width
@@ -43,6 +45,7 @@ public class Playing implements StateMethods {
 
 	// TO DO
 	//private boolean levelCompleted = false;
+	private boolean gameOver;
 
 	public Playing(Game game) {
 		this.game = game;
@@ -53,7 +56,7 @@ public class Playing implements StateMethods {
 
 	private void importBackground() {
 		for (int i = 0; i < backgroundTypes.length; i++) {
-			levelBackground[i] = Import.ImportData(backgroundTypes[i]);
+			levelBackground[i] = Import.importImage(backgroundTypes[i]);
 			assetWidth[i] = levelBackground[i].getWidth();
 		}
 	}
@@ -66,7 +69,12 @@ public class Playing implements StateMethods {
 		}
 	}
 
-	public static void restartGame() {
+	public void restartGame() {
+		gameOver = false;
+		paused = false;
+		player.resetAll();
+		enemies.resetEnemies();
+		//pauseButton.setVisible(true);
 	}
 
 	private void createPauseButton() {
@@ -79,8 +87,12 @@ public class Playing implements StateMethods {
 		pauseButton.setVisible(false);
 	}
 
+	public void checkIfEnemyWasHurt(Rectangle2D.Float attackBox) {
+		enemies.checkIfHit(attackBox);
+	}
+
 	public void loadNextLevel() {
-		resetAll();
+		restartGame();
 		levelHandler.loadNextLevel();
 		levelWidth = levelHandler.getCurrentLevel().getLevelData()[0].length;
 	}
@@ -88,14 +100,15 @@ public class Playing implements StateMethods {
 	private void initClasses() {
 		levelHandler = new LevelHandler(game);
 		enemies = new Enemies(this);
-		pause = new Pause(game);
-		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE));
+		pause = new Pause(game, this);
+		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE), this);
 		player.loadLevelData(levelHandler.getCurrentLevel().getLevelData());
+		gameOverScreen = new GameOver(this);
 	}
 
 	@Override
 	public void update() {
-		if(!paused) {
+		if(!paused && !gameOver) {
 			player.update();
 			enemies.update(levelHandler.getCurrentLevel().getLevelData(), player);
 			pauseButtonAction();
@@ -127,6 +140,9 @@ public class Playing implements StateMethods {
 		pauseButton.printComponents(g);
 		if(paused) {
 			pause.draw(g);
+		} else if(gameOver) {
+			gameOverScreen.draw(g);
+			pauseButton.setVisible(false);
 		}
 	}
 
@@ -143,61 +159,44 @@ public class Playing implements StateMethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(true);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(true);
-			break;
-		case KeyEvent.VK_SPACE:
-			player.setJump(true);
-			break;
+		if(gameOver)
+			gameOverScreen.keyPressed(e);
+		else
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_A:
+				player.setLeft(true);
+				break;
+			case KeyEvent.VK_D:
+				player.setRight(true);
+				break;
+			case KeyEvent.VK_SPACE:
+				player.setJump(true);
+				break;
 		}
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(false);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(false);
-			break;
-		case KeyEvent.VK_SPACE:
-			player.setJump(false);
-			break;
-		}
-	}
-	
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void resetAll() {
-		//levelCompleted = false;
+		if(!gameOver)
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_A:
+				player.setLeft(false);
+				break;
+			case KeyEvent.VK_D:
+				player.setRight(false);
+				break;
+			case KeyEvent.VK_SPACE:
+				player.setJump(false);
+				break;
+			}
 	}
 
 	public Player getPlayer() {
 		return player;
 	}
 
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
 }

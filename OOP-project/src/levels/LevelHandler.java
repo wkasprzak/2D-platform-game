@@ -45,7 +45,7 @@ public class LevelHandler {
 	}
 
 	private void importTileset() {
-		BufferedImage image = Import.ImportData(Import.TILES);
+		BufferedImage image = Import.importImage(Import.TILES);
 		levelTiles = new BufferedImage[32];
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 6; j++) {

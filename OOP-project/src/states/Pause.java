@@ -14,13 +14,15 @@ import java.awt.image.BufferedImage;
 public class Pause implements StateMethods {
 
     private Game game;
+    private Playing playing;
     public static JButton returnToMenuButton, restartButton, goBackButton, musicButton, soundButton;
     private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
     private BufferedImage backgroundImage;
 
-    public Pause(Game game) {
+    public Pause(Game game, Playing playing) {
         this.game = game;
-        backgroundImage = Import.ImportData(Import.MENU_BACKGROUND_IMAGE);
+        this.playing = playing;
+        backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
         createButtons();
     }
 
@@ -128,9 +130,8 @@ public class Pause implements StateMethods {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Gamestate.state = Gamestate.PLAYING;
-                Playing.pauseButton.setVisible(true);
-                Playing.restartGame();
-                Playing.paused = false;
+                playing.restartGame();
+                playing.pauseButton.setVisible(true);
                 hideButtons();
             }
         });
@@ -141,8 +142,7 @@ public class Pause implements StateMethods {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Gamestate.state = Gamestate.MENU;
-                Playing.restartGame();
-                Playing.paused = false;
+                playing.restartGame();
                 hideButtons();
             }
         });
@@ -153,8 +153,8 @@ public class Pause implements StateMethods {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Gamestate.state = Gamestate.PLAYING;
-                Playing.pauseButton.setVisible(true);
-                Playing.paused = false;
+                playing.pauseButton.setVisible(true);
+                playing.paused = false;
                 hideButtons();
             }
         });
@@ -192,26 +192,6 @@ public class Pause implements StateMethods {
                 musicButton.repaint(); // To make it faster
             }
         });
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
     }
 
     @Override

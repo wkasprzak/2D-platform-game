@@ -15,15 +15,16 @@ import utils.Import;
 public class Story implements StateMethods {
 	
 	private Game game;
+	private BufferedImage backgroundImage;
 	public static JButton exitButton;
+
+	// Fonts
 	private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
 	private Font font1 = new Font("STENCIL", Font.PLAIN, (int)(15 * Game.SCALE));
-	
-	private BufferedImage backgroundImage;
-	
+
 	public Story(Game game) {
 		this.game = game;
-		backgroundImage = Import.ImportData(Import.MENU_BACKGROUND_IMAGE);
+		backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
 		createExitButton();
 	}
 
@@ -73,7 +74,7 @@ public class Story implements StateMethods {
 		g.drawString(line3, x4, y + (int)(90 * Game.SCALE));
 		drawExitButton(g);
 	}
-	
+
 	private void createExitButton() {
 		exitButton = new JButton("EXIT");
 		exitButton.setForeground(Color.WHITE);
@@ -90,39 +91,13 @@ public class Story implements StateMethods {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

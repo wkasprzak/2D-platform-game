@@ -13,15 +13,21 @@ public abstract class Enemy extends Entity {
     protected boolean first = true;
     protected int enemyY;
     protected float attackRange = Game.TILES_SIZE;
+    protected int maxHealth;
+    protected int currentHealth;
+    protected boolean active = true;
+    protected boolean attackChecked;
 
     public Enemy(float x, float y, int width, int height, int type) {
         super(x, y, width, height);
         this.type = type;
-        initHitbox(width, height);
+        initHitbox(x,y,width, height);
+        maxHealth = maxHealthOfEntity(type);
+        currentHealth = maxHealth;
     }
 
+    // Animation counter decides which sprite should be shown
     protected void updateAnimationCounter() {
-        // Animation counter decides which sprite should be shown
         animationCounter++;
         if(animationCounter >= ANIMATION_SPEED) {
             animationCounter = 0;
@@ -30,6 +36,8 @@ public abstract class Enemy extends Entity {
                 animationIndex = 0;
                 if(state == ATTACK)
                     state = IDLE;
+                else if(state == DEATH)
+                    active = false;
             }
         }
     }
@@ -40,6 +48,13 @@ public abstract class Enemy extends Entity {
         animationIndex = 0;
     }
 
+    public void hurt(int value) {
+        currentHealth -= value;
+        if(currentHealth <= 0)
+            changeState(DEATH);
+    }
+
+    // Checks if player is inside of viewing area of entity
     protected boolean playerInViewingArea(int[][] levelData, Player player) {
         int playerY = (int)(player.getHitbox().y / Game.TILES_SIZE);
         if(playerY == enemyY)
@@ -48,6 +63,12 @@ public abstract class Enemy extends Entity {
                     return true;
             }
         return false;
+    }
+
+    protected void checkIfPlayerWasHurt(Rectangle2D.Float attackBox, Player player) {
+        if(attackBox.intersects(player.hitbox))
+            player.changeHP(-strengthOfEnemy(type));
+        attackChecked = true;
     }
 
     protected boolean playerInAttackRange(Player player) {
@@ -66,32 +87,32 @@ public abstract class Enemy extends Entity {
     }
 
     protected void changeDirection() {
-        if(moveDirection == LEFT)
-            moveDirection = RIGHT;
+        if(moveDirection == LEFT) moveDirection = RIGHT;
         else moveDirection = LEFT;
     }
 
+    // Needed in order to change the look of entity based on direction
     public int flipX() {
-        if (moveDirection == RIGHT)
-            return width;
-        else
-            return 0;
+        if (moveDirection == RIGHT) return width;
+        else return 0;
     }
 
     public int flipW() {
-        if (moveDirection == RIGHT)
-            return -1;
-        else
-            return 1;
-
+        if (moveDirection == RIGHT) return -1;
+        else return 1;
     }
 
-    public int getIndex() {
-        return animationIndex;
-    }
+    public int getState() { return state; }
 
-    public int getState() {
-        return state;
-    }
+    public boolean isActive() { return active; }
 
+    public void resetEnemy() {
+        hitbox.x = x;
+        hitbox.y = y;
+        first = true;
+        currentHealth = maxHealth;
+        changeState(IDLE);
+        active = true;
+        fallSpeed = 0;
+    }
 }
