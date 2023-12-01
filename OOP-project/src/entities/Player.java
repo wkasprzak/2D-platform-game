@@ -10,7 +10,7 @@ import utils.Import;
 public class Player extends Entity{
 	
 	// Appearance
-	private BufferedImage[][] charactersAppearance;
+	public BufferedImage[][] charactersAppearance;
 	
 	// Moving
 	private boolean moving = false, attacking = false;
@@ -34,8 +34,7 @@ public class Player extends Entity{
 	private static final int JUMPING = 19;
 	private static final int FALLING = 20;
 	private static final int ATTACK = 39;
-	private static final int HIT = 52;
-	public static final int DEAD = 53;
+	public static final int DEAD = 35;
 	
 	// How many different looks state has
 	private static int howManyPics(int player_action) {
@@ -48,8 +47,6 @@ public class Player extends Entity{
 		case JUMPING:
 		case FALLING:
 			return 4;
-		case HIT:
-			return 2;
 		default: 
 			return 1;
 		}
@@ -106,7 +103,15 @@ public class Player extends Entity{
 
 	public void update() {
 		if(currentHealth <= 0) {
-			playing.setGameOver(true);
+			if(state != DEAD) {
+				state = DEAD;
+				animationIndex = 0;
+				animationCounter = 0;
+				playing.setDying(true);
+			} else if(animationIndex == howManyPics(DEAD) - 1 && animationCounter >= ANIMATION_SPEED - 1) {
+				playing.setGameOver(true);
+			} else
+				updateAnimationCounter();
 			return;
 		}
 		updateAttackBox();

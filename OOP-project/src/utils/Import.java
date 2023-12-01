@@ -28,6 +28,7 @@ public class Import {
     public static final String HP = "/hp.png";
     public static final String FISH = "/fish.png";
     public static final String WARTHOG = "/warthog.png";
+    public static final String ANGEL = "/angel.png";
 
     // Importing images
 	public static BufferedImage importImage(String fileName) {

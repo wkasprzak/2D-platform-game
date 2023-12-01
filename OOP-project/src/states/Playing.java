@@ -46,6 +46,7 @@ public class Playing implements StateMethods {
 	// TO DO
 	//private boolean levelCompleted = false;
 	private boolean gameOver;
+	private boolean playerDying;
 
 	public Playing(Game game) {
 		this.game = game;
@@ -72,9 +73,9 @@ public class Playing implements StateMethods {
 	public void restartGame() {
 		gameOver = false;
 		paused = false;
+		playerDying = false;
 		player.resetAll();
 		enemies.resetEnemies();
-		//pauseButton.setVisible(true);
 	}
 
 	private void createPauseButton() {
@@ -108,7 +109,11 @@ public class Playing implements StateMethods {
 
 	@Override
 	public void update() {
-		if(!paused && !gameOver) {
+		if(gameOver) {
+			//gameOverScreen.update();
+		} else if(playerDying) {
+			player.update();
+		} else if (!paused) {
 			player.update();
 			enemies.update(levelHandler.getCurrentLevel().getLevelData(), player);
 			pauseButtonAction();
@@ -141,8 +146,8 @@ public class Playing implements StateMethods {
 		if(paused) {
 			pause.draw(g);
 		} else if(gameOver) {
-			gameOverScreen.draw(g);
 			pauseButton.setVisible(false);
+			Gamestate.state = Gamestate.GAMEOVER;
 		}
 	}
 
@@ -199,4 +204,8 @@ public class Playing implements StateMethods {
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
+
+    public void setDying(boolean playerDying) {
+		this.playerDying = playerDying;
+    }
 }

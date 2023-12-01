@@ -3,13 +3,7 @@ package main;
 import java.awt.Graphics;
 
 import entities.Player;
-import states.Gamestate;
-import states.Help;
-import states.Menu;
-import states.Options;
-import states.Playing;
-import states.Story;
-import states.Pause;
+import states.*;
 
 public class Game implements Runnable {
 	
@@ -25,6 +19,7 @@ public class Game implements Runnable {
 	private Story story;
 	private Options options;
 	private Pause pause;
+	private GameOver gameOver;
 	
 	// Game window
 	private GameWindow gameWindow;
@@ -62,6 +57,7 @@ public class Game implements Runnable {
 		help = new Help(this);
 		story = new Story(this);
 		options = new Options(this);
+		gameOver = new GameOver(playing);
 		pause = new Pause(this, playing);
 	}
 
@@ -90,6 +86,9 @@ public class Game implements Runnable {
 		case PAUSE:
 			pause.draw(g);
 			break;
+		case GAMEOVER:
+			gameOver.draw(g);
+			break;
 		default:
 			System.exit(0);
 			break;
@@ -115,6 +114,9 @@ public class Game implements Runnable {
 			break;
 		case PAUSE:
 			pause.update();
+			break;
+		case GAMEOVER:
+			gameOver.update();
 			break;
 		default:
 			break;

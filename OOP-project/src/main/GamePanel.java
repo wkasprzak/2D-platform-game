@@ -40,6 +40,8 @@ public class GamePanel extends JPanel {
 		add(Pause.goBackButton);
 		add(Pause.musicButton);
 		add(Pause.soundButton);
+		add(GameOver.tryAgainButton);
+		add(GameOver.backToMenuButton);
 	}
 
 	private void setSize() {
