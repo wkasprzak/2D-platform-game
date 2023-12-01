@@ -33,15 +33,13 @@ Aims of the project: <br>
 -> Practicing Class Desing <br>
 -> Developing Programming Skills <br>
 
-<br>
-Thanks to the creators of the images used in this project. Links to the images used:
-https://admurin.itch.io/top-down-mobs-warhog
-https://swooshwhoosh.itch.io/heartsui
-https://shubibubi.itch.io/cozy-fishing
-https://bowpixel.itch.io/cat-50-animations
-https://mynastudios.itch.io/basic-platformer-tileset
-https://prinbles.itch.io/robin
-https://essssam.itch.io/rocky-roads
-</br>
+Thanks to the creators of the images used in this project. Links to the images used:<br>
+https://admurin.itch.io/top-down-mobs-warhog <br>
+https://swooshwhoosh.itch.io/heartsui <br>
+https://shubibubi.itch.io/cozy-fishing <br>
+https://bowpixel.itch.io/cat-50-animations <br>
+https://mynastudios.itch.io/basic-platformer-tileset <br>
+https://prinbles.itch.io/robin <br>
+https://essssam.itch.io/rocky-roads <br>
 
 </footer>
