@@ -21,22 +21,6 @@ The project will involve creating a platform game in the Java language. Througho
 The main package will contain the basic framework for the graphical application, including a class responsible for building the window and the main game class. <br>
 The entities package will contain information related to the in-game characters, including the player and monsters. Individual classes will include information about the behavior of the creature, its state, as well as attributes such as health, strength, and so on. Sample part of the Player class: <br>
 
-Player --- extends ---> Entity <br>
-	+Player(float x, float y, int width, int height) <br>
-	#BufferedImage[][] charactersAppearance; <br>
-	#moving: boolean = false <br>
-	#left: boolean <br>
- 	#right: boolean <br>
-  	#jump: boolean <br>
-  	#facedLeft: int <br>
-  	#flipX: int <br>
-	#void setAction() <br>
-	+void draw(Graphics g) <br>
-	+void update() <br>
-	#void updateAnimationCounter() <br>
-	#void changePosition() <br>
-	#void loadGraphics() <br>
-
 The levels package will contain information regarding the generated levels, including their structure and textures. <br>
 Another package that will be part of the application is the one related to collectible objects, such as tokens. <br>
 The last main package (for now) is the game state package, which will include classes such as Menu and Playing. These classes will be responsible for managing specific parts of the application. <br>
@@ -48,5 +32,14 @@ Aims of the project: <br>
 -> using Interfaces <br>
 -> Practicing Class Desing <br>
 -> Developing Programming Skills <br>
+
+Thanks to the creators of the images used in this project. Links to the images used:<br>
+https://admurin.itch.io/top-down-mobs-warhog <br>
+https://swooshwhoosh.itch.io/heartsui <br>
+https://shubibubi.itch.io/cozy-fishing <br>
+https://bowpixel.itch.io/cat-50-animations <br>
+https://mynastudios.itch.io/basic-platformer-tileset <br>
+https://prinbles.itch.io/robin <br>
+https://essssam.itch.io/rocky-roads <br>
 
 </footer>
