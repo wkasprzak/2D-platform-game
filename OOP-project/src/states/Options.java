@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
@@ -56,6 +55,7 @@ public class Options implements StateMethods {
 		drawButtons(g);
 	}
 
+	// Buttons
 	private void hideButtons() {
 		exitButton.setVisible(false);
 		musicButton.setVisible(false);
@@ -148,6 +148,7 @@ public class Options implements StateMethods {
 		});
 	}
 
+	// Keyboard
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub

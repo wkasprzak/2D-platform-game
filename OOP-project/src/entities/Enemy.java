@@ -10,13 +10,14 @@ public abstract class Enemy extends Entity {
 
     protected int type, state;
     protected int moveDirection = LEFT;
-    protected boolean first = true;
     protected int enemyY;
-    protected float attackRange = Game.TILES_SIZE;
-    protected int maxHealth;
-    protected int currentHealth;
-    protected boolean active = true;
+    protected boolean first = true;
+
     protected boolean attackChecked;
+    protected float attackRange = Game.TILES_SIZE;
+
+    protected int maxHealth, currentHealth;
+    protected boolean active = true;
 
     public Enemy(float x, float y, int width, int height, int type) {
         super(x, y, width, height);
@@ -48,12 +49,14 @@ public abstract class Enemy extends Entity {
         animationIndex = 0;
     }
 
+    // HP change
     public void hurt(int value) {
         currentHealth -= value;
         if(currentHealth <= 0)
             changeState(DEATH);
     }
 
+    // Attacking
     // Checks if player is inside of viewing area of entity
     protected boolean playerInViewingArea(int[][] levelData, Player player) {
         int playerY = (int)(player.getHitbox().y / Game.TILES_SIZE);
@@ -81,6 +84,7 @@ public abstract class Enemy extends Entity {
         return distance <= attackRange;
     }
 
+    // Movement
     protected void face2Player(Player player) {
         if(player.hitbox.x > hitbox.x) moveDirection = RIGHT;
         else moveDirection = LEFT;
@@ -102,10 +106,7 @@ public abstract class Enemy extends Entity {
         else return 1;
     }
 
-    public int getState() { return state; }
-
-    public boolean isActive() { return active; }
-
+    // Resetting
     public void resetEnemy() {
         hitbox.x = x;
         hitbox.y = y;
@@ -115,4 +116,10 @@ public abstract class Enemy extends Entity {
         active = true;
         fallSpeed = 0;
     }
+
+    // Getters & setters
+    public int getState() { return state; }
+
+    public boolean isActive() { return active; }
+
 }

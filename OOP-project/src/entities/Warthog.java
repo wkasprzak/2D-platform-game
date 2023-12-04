@@ -8,7 +8,6 @@ import static utils.Enemies.*;
 
 public class Warthog extends Enemy {
 
-    // Attackbox
     protected Rectangle2D.Float attackBox;
 
     public Warthog(float x, float y) {
@@ -17,14 +16,9 @@ public class Warthog extends Enemy {
         initAttackBox();
     }
 
+    // Attack
     private void initAttackBox() {
         attackBox = new Rectangle2D.Float(x,y,(int)(20 * Game.SCALE), (int)(16*Game.SCALE));
-    }
-
-    public void update(int levelData[][], Player player) {
-        behaviour(levelData, player);
-        updateAnimationCounter();
-        updateAttackBox();
     }
 
     private void updateAttackBox() {
@@ -34,6 +28,13 @@ public class Warthog extends Enemy {
             attackBox.x = hitbox.x - (int)(7 * Game.SCALE);
         }
         attackBox.y = hitbox.y;
+    }
+
+    // Basics
+    public void update(int levelData[][], Player player) {
+        behaviour(levelData, player);
+        updateAnimationCounter();
+        updateAttackBox();
     }
 
     private void behaviour(int levelData[][], Player player) {
@@ -58,10 +59,11 @@ public class Warthog extends Enemy {
                     changeState(WALK);
                     break;
                 case WALK:
-                    if(playerInViewingArea(levelData,player))
+                    if(playerInViewingArea(levelData,player)) {
                         face2Player(player);
-                    if(canAttack(player))
-                        changeState(ATTACK);
+                        if (canAttack(player))
+                            changeState(ATTACK);
+                    }
 
                     float speed = 0;
                     if(moveDirection == LEFT)

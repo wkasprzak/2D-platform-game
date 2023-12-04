@@ -3,9 +3,13 @@ package entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import main.Game;
 import states.Playing;
 import utils.Import;
+
+import static utils.Enemies.WARTHOG;
 
 public class Player extends Entity{
 	
@@ -71,6 +75,7 @@ public class Player extends Entity{
 		initHitbox(x,y,(int)(15 * Game.SCALE), (int)(16 * Game.SCALE));
 	}
 
+	// Basics
 	private void setAction() {
 		int startState = state;
 		if(moving) state = RUNNING;
@@ -83,22 +88,6 @@ public class Player extends Entity{
 
 		if(attacking) state = ATTACK;
 		if(startState != state) resetAnimation();
-	}
-	
-	private void resetAnimation() {
-		animationCounter = 0;
-		animationIndex = 0;
-	}
-
-	public void draw(Graphics g, int offset) {
-		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) - offset + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
-		//drawHitbox(g, offset);
-		//drawAttackBox(attackBox, g, offset);
-		drawHP(g);
-	}
-
-	private void drawHP(Graphics g) {
-		g.drawImage(life[6 - currentHealth],(int)(10 * Game.SCALE), (int)(5 * Game.SCALE),(int)(HP_WIDTH * 1.5),(int)(HP_HEIGHT * 1.5),null);
 	}
 
 	public void update() {
@@ -115,10 +104,25 @@ public class Player extends Entity{
 			return;
 		}
 		updateAttackBox();
+
 		changePosition();
+		if(moving) {
+			checkFishTouched();
+			checkSpikesTouched();
+		}
+
 		if(attacking) checkAttack();
 		updateAnimationCounter();
 		setAction();	
+	}
+
+	// Environment interaction
+	private void checkSpikesTouched() {
+		playing.checkSpikesTouched(this);
+	}
+
+	private void checkFishTouched() {
+		playing.checkFishTouched(hitbox);
 	}
 
 	private void checkAttack() {
@@ -134,7 +138,7 @@ public class Player extends Entity{
 	}
 
 	// HP system
-	protected void changeHP(int damage) {
+	public void changeHP(int damage) {
 		currentHealth += damage;
 		if(currentHealth <= 0) {
 			currentHealth = 0;
@@ -142,6 +146,11 @@ public class Player extends Entity{
 			currentHealth = maxHealth;
 	}
 
+	private void drawHP(Graphics g) {
+		g.drawImage(life[6 - currentHealth],(int)(10 * Game.SCALE), (int)(5 * Game.SCALE),(int)(HP_WIDTH * 1.5),(int)(HP_HEIGHT * 1.5),null);
+	}
+
+	// Animations
 	private void updateAnimationCounter() {
 		// Animation counter decides which sprite should be shown
 		animationCounter++;
@@ -155,7 +164,8 @@ public class Player extends Entity{
 			}
 		}
 	}
-	
+
+	// Movement
 	private void changePosition() {
 
 		moving = false;
@@ -227,15 +237,26 @@ public class Player extends Entity{
 		if(!isOnFloor(hitbox, levelData)) inAir = true;
 	}
 
-	// Getters & setters
-	public void setLeft(boolean left) {this.left = left;}
+	public void setSpawnPoint(Point spawnPoint) {
+		this.x = spawnPoint.x;
+		this.y = spawnPoint.y;
+		hitbox.x = spawnPoint.x;
+		hitbox.y = spawnPoint.y;
+	}
 
-	public void setRight(boolean right) {this.right = right;}
+	private void resetAnimation() {
+		animationCounter = 0;
+		animationIndex = 0;
+	}
 
-	public void setJump(boolean jump) {this.jump = jump;}
+	public void draw(Graphics g, int offset) {
+		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) - offset + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
+		drawHitbox(g, offset);
+		//drawAttackBox(attackBox, g, offset);
+		drawHP(g);
+	}
 
-	public void setAttacking(boolean attacking) {this.attacking = attacking;}
-
+	// Resetting
 	public void resetAll() {
 		moving = false;
 		attacking = false;
@@ -256,4 +277,14 @@ public class Player extends Entity{
 		if(!isOnFloor(hitbox, levelData))
 			inAir = true;
 	}
+
+	// Getters & setters
+	public void setLeft(boolean left) {this.left = left;}
+
+	public void setRight(boolean right) {this.right = right;}
+
+	public void setJump(boolean jump) {this.jump = jump;}
+
+	public void setAttacking(boolean attacking) {this.attacking = attacking;}
+
 }

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
@@ -75,6 +74,7 @@ public class Story implements StateMethods {
 		drawExitButton(g);
 	}
 
+	// Buttons
 	private void createExitButton() {
 		exitButton = new JButton("EXIT");
 		exitButton.setForeground(Color.WHITE);
@@ -90,14 +90,13 @@ public class Story implements StateMethods {
 		exitButton.printComponents(g);
 	}
 
+	// Keyboard
 	@Override
 	public void keyPressed(KeyEvent e) {
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-
 	}
 
 }

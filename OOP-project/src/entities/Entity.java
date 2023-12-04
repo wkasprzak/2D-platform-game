@@ -20,7 +20,7 @@ public abstract class Entity {
 	// Animation of entity
 	protected int state;
 	protected int animationIndex, animationCounter; // Needed for animation
-	protected static int ANIMATION_SPEED = 25;
+	public static int ANIMATION_SPEED = 25;
 
 	// Moving
 	protected float entitySpeed = 0.7f * Game.SCALE;
@@ -34,9 +34,7 @@ public abstract class Entity {
 
 	// Directions
 	public static final int LEFT = 0;
-	public static final int UP = 1;
 	public static final int RIGHT = 2;
-	public static final int DOWN = 3;
 	
 	public Entity(float x, float y, int width, int height) {
 		this.x = x;
@@ -44,15 +42,16 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 	}
-	
+
+	// Hitbox & attackBox
+	protected void initHitbox(float x, float y, float width, float height) {
+		hitbox = new Rectangle2D.Float(x, y, width, height);
+	}
+
 	// Debugging only
 	protected void drawHitbox(Graphics g, int offset) {
 		g.setColor(Color.BLACK);
 		g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
-	}
-	
-	protected void initHitbox(float x, float y, float width, float height) {
-		hitbox = new Rectangle2D.Float(x, y, width, height);
 	}
 
 	protected void drawAttackBox(Rectangle2D.Float attackBox, Graphics g, int offset) {
@@ -60,6 +59,7 @@ public abstract class Entity {
 		g.drawRect((int)attackBox.x - offset, (int)attackBox.y,(int)attackBox.width,(int)attackBox.height);
 	}
 
+	// Movement
 	protected static float getCloserToWall(Rectangle2D.Float hitbox, float speed) {
 		int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
 		if (speed > 0) {
@@ -74,11 +74,9 @@ public abstract class Entity {
 	
 	protected static float getCloserToFloor(Rectangle2D.Float hitbox, float airSpeed) {
 		int currentTile = (int) (hitbox.y / Game.TILES_SIZE);
-		if (airSpeed > 0) {
-			// Falling - touching floor
+		if (airSpeed > 0) { // Falling
 			return currentTile * Game.TILES_SIZE + hitbox.height - 1;
 		} else
-			// Jumping
 			return currentTile * Game.TILES_SIZE;
 
 	}
@@ -105,7 +103,7 @@ public abstract class Entity {
 		int lvlData = levelData[(int)yPos][(int)xPos];
 		
 		// Looking if block on position is solidBlock (according to tileset)
-		if(lvlData < 0 || lvlData > 31 || (lvlData != 5 && lvlData != 31)) return true;
+		if(lvlData < 0 || lvlData > 51 || (lvlData != 5 && lvlData != 31 && lvlData != 30 && lvlData != 32 && lvlData != 33)) return true;
 		
 		return false;
 	}

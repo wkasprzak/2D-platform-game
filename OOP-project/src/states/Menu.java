@@ -7,18 +7,12 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 import main.Game;
 import utils.Import;
-import states.*;
-import main.GameWindow.*;
 
 public class Menu implements StateMethods {
 
@@ -77,7 +71,8 @@ public class Menu implements StateMethods {
         g.drawString(gameTitle3, x3, y + (int)(30 * Game.SCALE));
         drawButtons(g);
 	}
-	
+
+	// Buttons
 	private void drawButtons(Graphics g) {
 		playButton.setBounds(Game.GAME_WIDTH/2 - (int)(55 * Game.SCALE), Game.GAME_HEIGHT / 2,(int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		playButton.printComponents(g);
@@ -199,6 +194,7 @@ public class Menu implements StateMethods {
 		});
 	}
 
+	// Keyboard
 	@Override
 	public void keyPressed(KeyEvent e) {}
 

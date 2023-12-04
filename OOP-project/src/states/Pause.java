@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class Pause implements StateMethods {
@@ -55,6 +54,7 @@ public class Pause implements StateMethods {
         drawButtons(g);
     }
 
+    // Buttons
     private void drawButtons(Graphics g) {
         musicButton.setBounds(Game.GAME_WIDTH/2 - (int)(50 * Game.SCALE), Game.GAME_HEIGHT / 2 - (int)(20 * Game.SCALE),(int)(100 * Game.SCALE),(int)(15 * Game.SCALE));
         musicButton.printComponents(g);
@@ -194,13 +194,12 @@ public class Pause implements StateMethods {
         });
     }
 
+    // Keyboard
     @Override
     public void keyPressed(KeyEvent e) {
-
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

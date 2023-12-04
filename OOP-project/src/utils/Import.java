@@ -26,9 +26,10 @@ public class Import {
     public static final String PLAINS = "/plains.png";
     public static final String GRASS = "/grass.png";
     public static final String HP = "/hp.png";
-    public static final String FISH = "/fish.png";
     public static final String WARTHOG = "/warthog.png";
     public static final String ANGEL = "/angel.png";
+    public static final String NEMO = "/nemo.png";
+    public static final String SPIKES = "/spikes.png";
 
     // Importing images
 	public static BufferedImage importImage(String fileName) {

@@ -1,6 +1,6 @@
 package entities;
 
-import levels.LevelHandler;
+import levels.Level;
 import states.Playing;
 import utils.Import;
 
@@ -14,23 +14,18 @@ import static utils.Enemies.*;
 public class Enemies {
 
     private Playing playing;
+
     private BufferedImage[][] warthogAppearance;
     private ArrayList<Warthog> warthogs = new ArrayList<>();
 
     public Enemies(Playing playing) {
         this.playing = playing;
         loadEnemySprites();
-        addEnemies();
     }
 
-    private void addEnemies() {
-        warthogs = LevelHandler.getWarthogs();
-    }
-
-    public void update(int levelData[][], Player player) {
-        for(Warthog w : warthogs)
-            if(w.isActive())
-                w.update(levelData, player);
+    // Adding warthogs
+    public void addEnemies(Level level) {
+        warthogs = level.getWarthogs();
     }
 
     public void draw(Graphics g, int offset) {
@@ -46,16 +41,6 @@ public class Enemies {
             }
     }
 
-    public void checkIfHit(Rectangle2D.Float attackBox) {
-        for(Warthog w : warthogs) {
-            if(w.isActive())
-                if(attackBox.intersects(w.getHitbox())) {
-                    w.hurt(5);
-                    return;
-                 }
-        }
-    }
-
     private void loadEnemySprites() {
         warthogAppearance = new BufferedImage[4][4];
         BufferedImage image = Import.importImage(Import.WARTHOG);
@@ -66,9 +51,32 @@ public class Enemies {
         }
     }
 
-    public void resetEnemies() {
-        for(Warthog w : warthogs) {
-            w.resetEnemy();
+    // Maintenance
+    public void update(int levelData[][], Player player) {
+        boolean isAnyActive = false;
+        for(Warthog w : warthogs)
+            if(w.isActive()) {
+                w.update(levelData, player);
+                isAnyActive = true;
+            }
+        if(!isAnyActive) {
+            playing.setLevelCompleted(true);
+            playing.ok = true;
         }
+    }
+
+    public void checkIfHit(Rectangle2D.Float attackBox) {
+        for(Warthog w : warthogs) {
+            if(w.isActive())
+                if(attackBox.intersects(w.getHitbox())) {
+                    w.hurt(5);
+                    return;
+                 }
+        }
+    }
+
+    public void resetEnemies() {
+        for(Warthog w : warthogs)
+            w.resetEnemy();
     }
 }

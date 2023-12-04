@@ -20,6 +20,7 @@ public class Game implements Runnable {
 	private Options options;
 	private Pause pause;
 	private GameOver gameOver;
+	private LevelCompleted levelCompleted;
 	
 	// Game window
 	private GameWindow gameWindow;
@@ -43,7 +44,8 @@ public class Game implements Runnable {
 		initWindow();
 		startGameLoop();
 	}
-	
+
+	// Basics
 	private void initWindow() {
 		gamePanel = new GamePanel(this);
 		gameWindow = new GameWindow(gamePanel);
@@ -59,13 +61,9 @@ public class Game implements Runnable {
 		options = new Options(this);
 		gameOver = new GameOver(playing);
 		pause = new Pause(this, playing);
+		levelCompleted = new LevelCompleted(playing);
 	}
 
-	private void startGameLoop() {
-		gameThread = new Thread(this);
-		gameThread.start();
-	}
-	
 	public void draw(Graphics g) {
 		switch(Gamestate.state) {
 		case MENU:
@@ -88,6 +86,9 @@ public class Game implements Runnable {
 			break;
 		case GAMEOVER:
 			gameOver.draw(g);
+			break;
+		case LEVELCOMPLETED:
+			levelCompleted.draw(g);
 			break;
 		default:
 			System.exit(0);
@@ -118,11 +119,20 @@ public class Game implements Runnable {
 		case GAMEOVER:
 			gameOver.update();
 			break;
+		case LEVELCOMPLETED:
+			levelCompleted.update();
+			break;
 		default:
 			break;
 		}
 	}
-	
+
+	// Game loop
+	private void startGameLoop() {
+		gameThread = new Thread(this);
+		gameThread.start();
+	}
+
 	public void run() {
 		
 		// How long each frame will last
@@ -165,7 +175,8 @@ public class Game implements Runnable {
 			}
 		}
 	}
-	
+
+	// Getters & setters
 	public Playing getPlaying() {
 		return playing;
 	}

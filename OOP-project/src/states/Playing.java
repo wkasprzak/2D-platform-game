@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -12,6 +11,7 @@ import entities.Enemies;
 import entities.Player;
 import levels.LevelHandler;
 import main.Game;
+import objects.ObjectHandler;
 import utils.Import;
 
 import javax.swing.*;
@@ -22,8 +22,10 @@ public class Playing implements StateMethods {
 	private Player player;
 	private Enemies enemies;
 	private LevelHandler levelHandler;
+	private ObjectHandler objectHandler;
 	private Pause pause;
-	private GameOver gameOverScreen;
+
+	public boolean ok;
 
 	// Pause button
 	private final Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
@@ -34,17 +36,14 @@ public class Playing implements StateMethods {
 	private int offset;
 	private final int leftBorder = (int)(0.2 * Game.GAME_WIDTH);
 	private final int rightBorder = (int)(0.8 * Game.GAME_WIDTH);
-	private int levelWidth = 50;
-	private final int maxTilesOffset = levelWidth - Game.NUMBER_OF_TILES_IN_WIDTH;
-	private final int maxOffset = maxTilesOffset * Game.TILES_SIZE;
+	private int maxOffset;
 
 	// Game background
 	private final String[] backgroundTypes = {Import.BACKGROUND,Import.BIG_CLOUDS,Import.SMALL_CLOUDS,Import.MOUNTAINS,Import.PLAINS,Import.GRASS};
 	private final BufferedImage[] levelBackground = new BufferedImage[6];
 	private final int[] assetWidth = new int[6];
 
-	// TO DO
-	//private boolean levelCompleted = false;
+	private boolean levelCompleted;
 	private boolean gameOver;
 	private boolean playerDying;
 
@@ -53,8 +52,80 @@ public class Playing implements StateMethods {
 		initClasses();
 		createPauseButton();
 		importBackground();
+		
+		checkLevelOffset();
+		loadFirstLevel();
 	}
 
+	// Basics
+	private void initClasses() {
+		levelHandler = new LevelHandler(game);
+		enemies = new Enemies(this);
+		pause = new Pause(game, this);
+		objectHandler = new ObjectHandler(this);
+		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE), this);
+		player.setSpawnPoint(levelHandler.getCurrentLevel().getSpawn());
+		player.loadLevelData(levelHandler.getCurrentLevel().getLevelData());
+	}
+
+	@Override
+	public void update() {
+		if(levelCompleted) {
+			Gamestate.state = Gamestate.LEVELCOMPLETED;
+			pauseButton.setVisible(false);
+		}
+		if(playerDying) {
+			player.update();
+		} else if (!paused) {
+			player.update();
+			objectHandler.update();
+			enemies.update(levelHandler.getCurrentLevel().getLevelData(), player);
+			pauseButtonAction();
+			ifPosCloseToWindowEnd();
+		}
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		drawBackground(g, offset);
+		enemies.draw(g, offset);
+		player.draw(g, offset);
+		pauseButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
+		pauseButton.printComponents(g);
+		levelHandler.draw(g, offset);
+		objectHandler.draw(g, offset);
+		if(paused) {
+			pause.draw(g);
+		} else if(gameOver) {
+			pauseButton.setVisible(false);
+			Gamestate.state = Gamestate.GAMEOVER;
+		}
+	}
+
+	// Level creation
+	public void loadNextLevel() {
+		restartGame();
+		if(ok) {
+			ok = false;
+			levelHandler.loadNextLevel();
+			player.setSpawnPoint(levelHandler.getCurrentLevel().getSpawn());
+		}
+	}
+
+	private void loadFirstLevel() {
+		enemies.addEnemies(levelHandler.getCurrentLevel());
+		objectHandler.loadObjects(levelHandler.getCurrentLevel());
+	}
+
+	private void checkLevelOffset() {
+		maxOffset = levelHandler.getCurrentLevel().getLevelOffset();
+	}
+
+	public void setLevelOffset(int levelOffset) {
+		this.maxOffset = levelOffset;
+	}
+
+	// Background
 	private void importBackground() {
 		for (int i = 0; i < backgroundTypes.length; i++) {
 			levelBackground[i] = Import.importImage(backgroundTypes[i]);
@@ -70,57 +141,20 @@ public class Playing implements StateMethods {
 		}
 	}
 
-	public void restartGame() {
-		gameOver = false;
-		paused = false;
-		playerDying = false;
-		player.resetAll();
-		enemies.resetEnemies();
-	}
-
-	private void createPauseButton() {
-		pauseButton = new JButton("| |");
-		pauseButton.setForeground(Color.WHITE);
-		pauseButton.setFont(font);
-		pauseButton.setOpaque(false);
-		pauseButton.setContentAreaFilled(false);
-		pauseButton.setBorderPainted(false);
-		pauseButton.setVisible(false);
-	}
-
+	// Environment
 	public void checkIfEnemyWasHurt(Rectangle2D.Float attackBox) {
 		enemies.checkIfHit(attackBox);
 	}
 
-	public void loadNextLevel() {
-		restartGame();
-		levelHandler.loadNextLevel();
-		levelWidth = levelHandler.getCurrentLevel().getLevelData()[0].length;
-	}
-	
-	private void initClasses() {
-		levelHandler = new LevelHandler(game);
-		enemies = new Enemies(this);
-		pause = new Pause(game, this);
-		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE), this);
-		player.loadLevelData(levelHandler.getCurrentLevel().getLevelData());
-		gameOverScreen = new GameOver(this);
+	public void checkFishTouched(Rectangle2D.Float hitbox) {
+		objectHandler.checkObjectTouched(hitbox);
 	}
 
-	@Override
-	public void update() {
-		if(gameOver) {
-			//gameOverScreen.update();
-		} else if(playerDying) {
-			player.update();
-		} else if (!paused) {
-			player.update();
-			enemies.update(levelHandler.getCurrentLevel().getLevelData(), player);
-			pauseButtonAction();
-			ifPosCloseToWindowEnd();
-		}
+	public void checkSpikesTouched(Player player) {
+		objectHandler.checkSpikesTouched(player);
 	}
 
+	// Position
 	private void ifPosCloseToWindowEnd() {
 		int playerX = (int)player.getHitbox().x;
 		int diff = playerX - offset;
@@ -135,20 +169,15 @@ public class Playing implements StateMethods {
 			offset = 0;
 	}
 
-	@Override
-	public void draw(Graphics g) {
-		drawBackground(g, offset);
-		levelHandler.draw(g, offset);
-		enemies.draw(g, offset);
-		player.draw(g, offset);
-		pauseButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
-		pauseButton.printComponents(g);
-		if(paused) {
-			pause.draw(g);
-		} else if(gameOver) {
-			pauseButton.setVisible(false);
-			Gamestate.state = Gamestate.GAMEOVER;
-		}
+	// Buttons
+	private void createPauseButton() {
+		pauseButton = new JButton("| |");
+		pauseButton.setForeground(Color.WHITE);
+		pauseButton.setFont(font);
+		pauseButton.setOpaque(false);
+		pauseButton.setContentAreaFilled(false);
+		pauseButton.setBorderPainted(false);
+		pauseButton.setVisible(false);
 	}
 
 	private void pauseButtonAction() {
@@ -162,23 +191,31 @@ public class Playing implements StateMethods {
 		});
 	}
 
+	// Reset
+	public void restartGame() {
+		gameOver = false;
+		paused = false;
+		playerDying = false;
+		levelCompleted = false;
+		objectHandler.resetObjects();
+		player.resetAll();
+		enemies.resetEnemies();
+	}
+
+	// Keyboard
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(gameOver)
-			gameOverScreen.keyPressed(e);
-		else
-			switch (e.getKeyCode()) {
-			case KeyEvent.VK_A:
-				player.setLeft(true);
-				break;
-			case KeyEvent.VK_D:
-				player.setRight(true);
-				break;
-			case KeyEvent.VK_SPACE:
-				player.setJump(true);
-				break;
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
+			player.setLeft(true);
+			break;
+		case KeyEvent.VK_D:
+			player.setRight(true);
+			break;
+		case KeyEvent.VK_SPACE:
+			player.setJump(true);
+			break;
 		}
-		
 	}
 
 	@Override
@@ -197,6 +234,7 @@ public class Playing implements StateMethods {
 			}
 	}
 
+	// Getters & setters
 	public Player getPlayer() {
 		return player;
 	}
@@ -208,4 +246,20 @@ public class Playing implements StateMethods {
     public void setDying(boolean playerDying) {
 		this.playerDying = playerDying;
     }
+
+	public Enemies getEnemies() {
+		return enemies;
+	}
+
+	public void setLevelCompleted(boolean levelCompleted) {
+		this.levelCompleted = levelCompleted;
+	}
+
+	public ObjectHandler getObjectHandler() {
+		return objectHandler;
+	}
+
+	public LevelHandler getLevelHandler() {
+		return levelHandler;
+	}
 }
