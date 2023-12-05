@@ -23,13 +23,14 @@ public class Playing implements StateMethods {
 	private Enemies enemies;
 	private LevelHandler levelHandler;
 	private ObjectHandler objectHandler;
+	private LevelCompleted levelCompletedOverlay;
 	private Pause pause;
 
 	public boolean ok;
 
 	// Pause button
 	private final Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
-	public boolean paused = false;
+	public boolean paused;
 	public static JButton pauseButton;
 
 	// Levels longer than window width
@@ -46,13 +47,14 @@ public class Playing implements StateMethods {
 	private boolean levelCompleted;
 	private boolean gameOver;
 	private boolean playerDying;
+	private boolean win;
 
 	public Playing(Game game) {
 		this.game = game;
 		initClasses();
 		createPauseButton();
 		importBackground();
-		
+
 		checkLevelOffset();
 		loadFirstLevel();
 	}
@@ -66,17 +68,17 @@ public class Playing implements StateMethods {
 		player = new Player(50, 50, (int) (32 * Game.SCALE), (int) (32 * Game.SCALE), this);
 		player.setSpawnPoint(levelHandler.getCurrentLevel().getSpawn());
 		player.loadLevelData(levelHandler.getCurrentLevel().getLevelData());
+		levelCompletedOverlay = new LevelCompleted(this);
 	}
 
 	@Override
 	public void update() {
 		if(levelCompleted) {
-			Gamestate.state = Gamestate.LEVELCOMPLETED;
-			pauseButton.setVisible(false);
+			enemies.resetEnemies();
 		}
-		if(playerDying) {
+		else if(playerDying) {
 			player.update();
-		} else if (!paused) {
+		} else if (!gameOver) {
 			player.update();
 			objectHandler.update();
 			enemies.update(levelHandler.getCurrentLevel().getLevelData(), player);
@@ -88,28 +90,31 @@ public class Playing implements StateMethods {
 	@Override
 	public void draw(Graphics g) {
 		drawBackground(g, offset);
+
+		levelHandler.draw(g, offset);
 		enemies.draw(g, offset);
 		player.draw(g, offset);
+		objectHandler.draw(g, offset);
+
 		pauseButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		pauseButton.printComponents(g);
-		levelHandler.draw(g, offset);
-		objectHandler.draw(g, offset);
+
 		if(paused) {
 			pause.draw(g);
 		} else if(gameOver) {
 			pauseButton.setVisible(false);
 			Gamestate.state = Gamestate.GAMEOVER;
+		} else if(levelCompleted) {
+			pauseButton.setVisible(false);
+			levelCompletedOverlay.draw(g);
 		}
 	}
 
 	// Level creation
 	public void loadNextLevel() {
 		restartGame();
-		if(ok) {
-			ok = false;
-			levelHandler.loadNextLevel();
-			player.setSpawnPoint(levelHandler.getCurrentLevel().getSpawn());
-		}
+		levelHandler.loadNextLevel();
+		player.setSpawnPoint(levelHandler.getCurrentLevel().getSpawn());
 	}
 
 	private void loadFirstLevel() {
@@ -134,7 +139,7 @@ public class Playing implements StateMethods {
 	}
 
 	private void drawBackground(Graphics g, int offset) {
-		for(int i = 0; i < Game.GAME_WIDTH / assetWidth[0] + 1; i++) {
+		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 6; j++) {
 				g.drawImage(levelBackground[j], i * Game.GAME_WIDTH - offset,0, Game.GAME_WIDTH, Game.GAME_HEIGHT,null);
 			}
@@ -220,18 +225,22 @@ public class Playing implements StateMethods {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(!gameOver)
-			switch (e.getKeyCode()) {
-			case KeyEvent.VK_A:
-				player.setLeft(false);
-				break;
-			case KeyEvent.VK_D:
-				player.setRight(false);
-				break;
-			case KeyEvent.VK_SPACE:
-				player.setJump(false);
-				break;
-			}
+		if(!gameOver) {
+			if (levelCompleted)
+				levelCompletedOverlay.keyReleased(e);
+			else
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_A:
+						player.setLeft(false);
+						break;
+					case KeyEvent.VK_D:
+						player.setRight(false);
+						break;
+					case KeyEvent.VK_SPACE:
+						player.setJump(false);
+						break;
+				}
+		}
 	}
 
 	// Getters & setters
@@ -262,4 +271,9 @@ public class Playing implements StateMethods {
 	public LevelHandler getLevelHandler() {
 		return levelHandler;
 	}
+
+	public void setWin(boolean win) {
+		this.win = win;
+	}
+
 }

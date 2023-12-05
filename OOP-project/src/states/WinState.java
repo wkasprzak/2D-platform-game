@@ -3,24 +3,24 @@ package states;
 import main.Game;
 import utils.Import;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class LevelCompleted {
+public class WinState implements StateMethods {
 
-    private Playing playing;
+    private Game game;
     private BufferedImage backgroundImage;
 
     // Font
     private Font font = new Font("STENCIL", Font.BOLD, (int)(20 * Game.SCALE));
 
-    public LevelCompleted(Playing playing) {
-        this.playing = playing;
+    public WinState(Game game) {
+        this.game = game;
         backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
+    }
+
+    public void update() {
     }
 
     public void draw(Graphics g) {
@@ -31,7 +31,7 @@ public class LevelCompleted {
         g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 
         // Text
-        String gameOverString = "LEVEL COMPLETED";
+        String gameOverString = "YOU WIN!";
         String continueString = "Press space to continue";
 
         // Getting size of text & setting position & printing
@@ -44,9 +44,13 @@ public class LevelCompleted {
     }
 
     // Keyboard
+    public void keyPressed(KeyEvent e) {
+    }
+
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-            playing.loadNextLevel();
+            Gamestate.state = Gamestate.MENU;
         }
     }
+
 }

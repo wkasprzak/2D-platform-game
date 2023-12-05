@@ -10,6 +10,7 @@ import objects.Fish;
 import objects.Spikes;
 import states.Gamestate;
 import main.Game;
+import states.WinState;
 import utils.Import;
 
 import static objects.InGameObject.FISH;
@@ -21,7 +22,7 @@ public class LevelHandler {
 	private Game game;
 	private BufferedImage[] levelTiles;
 	public ArrayList<Level> levels;
-	public int levelIndex = 0;
+	public int levelIndex;
 	
 	public LevelHandler(Game game) {
 		this.game = game;
@@ -51,7 +52,8 @@ public class LevelHandler {
 		levelIndex++;
 		if(levelIndex >= levels.size()) {
 			levelIndex = 0;
-			Gamestate.state = Gamestate.MENU;
+			game.getPlaying().setWin(true);
+			Gamestate.state = Gamestate.WINSTATE;
 		}
 
 		Level newLevel = levels.get(levelIndex);
@@ -59,6 +61,7 @@ public class LevelHandler {
 		game.getPlaying().getPlayer().loadLevelData(newLevel.getLevelData());
 		game.getPlaying().setLevelOffset(newLevel.getLevelOffset());
 		game.getPlaying().getObjectHandler().loadObjects(newLevel);
+		System.out.println(newLevel.getWarthogs().size());
 	}
 
 	public void draw(Graphics g, int offset) {

@@ -61,7 +61,6 @@ public class Enemies {
             }
         if(!isAnyActive) {
             playing.setLevelCompleted(true);
-            playing.ok = true;
         }
     }
 

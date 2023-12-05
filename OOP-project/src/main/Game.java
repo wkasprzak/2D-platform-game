@@ -1,7 +1,7 @@
 package main;
 
 import java.awt.Graphics;
-
+import java.awt.event.KeyListener;
 import entities.Player;
 import states.*;
 
@@ -20,7 +20,7 @@ public class Game implements Runnable {
 	private Options options;
 	private Pause pause;
 	private GameOver gameOver;
-	private LevelCompleted levelCompleted;
+	private WinState winState;
 	
 	// Game window
 	private GameWindow gameWindow;
@@ -61,7 +61,7 @@ public class Game implements Runnable {
 		options = new Options(this);
 		gameOver = new GameOver(playing);
 		pause = new Pause(this, playing);
-		levelCompleted = new LevelCompleted(playing);
+		winState = new WinState(this);
 	}
 
 	public void draw(Graphics g) {
@@ -87,8 +87,8 @@ public class Game implements Runnable {
 		case GAMEOVER:
 			gameOver.draw(g);
 			break;
-		case LEVELCOMPLETED:
-			levelCompleted.draw(g);
+		case WINSTATE:
+			winState.draw(g);
 			break;
 		default:
 			System.exit(0);
@@ -119,8 +119,8 @@ public class Game implements Runnable {
 		case GAMEOVER:
 			gameOver.update();
 			break;
-		case LEVELCOMPLETED:
-			levelCompleted.update();
+		case WINSTATE:
+			winState.update();
 			break;
 		default:
 			break;
@@ -200,4 +200,9 @@ public class Game implements Runnable {
 	public static void setSound(boolean sound) {
 		Game.sound = sound;
 	}
+
+	public WinState getWinstate() {
+		return winState;
+	}
+
 }

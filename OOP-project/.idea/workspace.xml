@@ -4,39 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6317a80-cb97-4b3a-b03c-5662deda5643" name="Changes" comment="Death screen update">
-      <change afterPath="$PROJECT_DIR$/res/levels/3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/nemo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/spikes.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/objects/Fish.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/objects/InGameObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/objects/ObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/objects/Spikes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/LevelCompleted.java" afterDir="false" />
+    <list default="true" id="b6317a80-cb97-4b3a-b03c-5662deda5643" name="Changes" comment="Massive changes">
+      <change afterPath="$PROJECT_DIR$/src/states/WinState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/clouds.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/level_background.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/res/levels/1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/1.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/levels/2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/levels/3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/levels/3.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Enemies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Enemies.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Warthog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Warthog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/input/KeyboardInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/input/KeyboardInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/levels/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/levels/Level.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/levels/LevelHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/levels/LevelHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/GameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/GameOver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/Gamestate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Gamestate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Help.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Options.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Pause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Pause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/LevelCompleted.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/LevelCompleted.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/Playing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Playing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/StateMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/StateMethods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Story.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Story.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/Import.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Import.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,28 +51,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kaspr/github-classroom/dataproctech/long-term-project-wkasprzak/OOP-project/res/levels&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/kaspr/github-classroom/dataproctech/long-term-project-wkasprzak/OOP-project/res/audio",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "inlay.hints",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kaspr\github-classroom\dataproctech\long-term-project-wkasprzak\OOP-project\res\audio" />
       <recent name="C:\Users\kaspr\github-classroom\dataproctech\long-term-project-wkasprzak\OOP-project\res\levels" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kaspr\github-classroom\dataproctech\long-term-project-wkasprzak\OOP-project\res\levels" />
       <recent name="C:\Users\kaspr\github-classroom\dataproctech\long-term-project-wkasprzak\OOP-project\res" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -145,7 +130,7 @@
       <workItem from="1701604005267" duration="16141000" />
       <workItem from="1701637082694" duration="4024000" />
       <workItem from="1701672222486" duration="744000" />
-      <workItem from="1701715606706" duration="10347000" />
+      <workItem from="1701715606706" duration="31341000" />
     </task>
     <task id="LOCAL-00001" summary="Added pause screen &amp; buttons">
       <option name="closed" value="true" />
@@ -187,11 +172,30 @@
       <option name="project" value="LOCAL" />
       <updated>1701464841309</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Massive changes">
+      <option name="closed" value="true" />
+      <created>1701728959186</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1701728959186</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -200,7 +204,8 @@
     <MESSAGE value="Added enemies &amp; basics of attacking" />
     <MESSAGE value="Finished attacking" />
     <MESSAGE value="Death screen update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Death screen update" />
+    <MESSAGE value="Massive changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Massive changes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

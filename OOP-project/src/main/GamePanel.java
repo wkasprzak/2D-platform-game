@@ -42,8 +42,6 @@ public class GamePanel extends JPanel {
 		add(Pause.soundButton);
 		add(GameOver.tryAgainButton);
 		add(GameOver.backToMenuButton);
-		add(LevelCompleted.nextLevelButton);
-		add(LevelCompleted.backToMenuButton);
 	}
 
 	private void setSize() {

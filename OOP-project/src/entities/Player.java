@@ -23,7 +23,7 @@ public class Player extends Entity{
 	protected float playerSpeed = 1.0f * Game.SCALE;
 
 	// Hitbox
-	private float minimalisationX = 9 * Game.SCALE;
+	private float minimalisationX = 12 * Game.SCALE;
 	private float minimalisationY = 16 * Game.SCALE;
 	
 	// Level
@@ -72,7 +72,7 @@ public class Player extends Entity{
 		this.currentHealth = maxHealth;
 		attackBox = new Rectangle2D.Float(x,y,(int)(20 * Game.SCALE), (int)(16 * Game.SCALE));
 		loadGraphics();
-		initHitbox(x,y,(int)(15 * Game.SCALE), (int)(16 * Game.SCALE));
+		initHitbox(x,y,(int)(12 * Game.SCALE), (int)(16 * Game.SCALE));
 	}
 
 	// Basics
@@ -251,7 +251,7 @@ public class Player extends Entity{
 
 	public void draw(Graphics g, int offset) {
 		g.drawImage(charactersAppearance[state][animationIndex], (int)(hitbox.x - minimalisationX) - offset + flipX, (int)(hitbox.y - minimalisationY), width * facedRight, height, null);
-		drawHitbox(g, offset);
+		//drawHitbox(g, offset);
 		//drawAttackBox(attackBox, g, offset);
 		drawHP(g);
 	}

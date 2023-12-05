@@ -18,8 +18,6 @@ public class Level {
 	private ArrayList<Fish> fish;
 	private ArrayList<Spikes> spikes;
 
-	private int levelWidth;
-	private int maxTilesOffset;
 	private int maxOffset;
 
 	private Point spawn;
@@ -53,8 +51,8 @@ public class Level {
 	}
 
 	private void checkLevelOffset() {
-		levelWidth = csvLevel[0].length;
-		maxTilesOffset = levelWidth - Game.NUMBER_OF_TILES_IN_WIDTH;
+		int levelWidth = csvLevel[0].length;
+		int maxTilesOffset = levelWidth - Game.NUMBER_OF_TILES_IN_WIDTH;
 		maxOffset = Game.TILES_SIZE * maxTilesOffset;
 	}
 
