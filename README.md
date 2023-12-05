@@ -31,7 +31,8 @@ In addition to the aforementioned packages, the game will also include several u
 The project includes many concepts related to object-oriented programming, such as: <br>
 -> classes and objects <br>
 -> access modifiers <br>
--> constructors and destructors <br>
+-> constructors <br>
+-> getters and setters <br>
 -> inheritance (e.g., classes entity and player) <br>
 -> abstract classes (e.g., class entity, class enemy) <br>
 -> interfaces (StateMethods) <br>
