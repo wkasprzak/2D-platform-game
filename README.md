@@ -15,7 +15,8 @@
 
 </header>
 
-Long term project in Java - Wojciech Kasprzak <br>
+Long term project in Java - Wojciech Kasprzak 155824<br>
+
 The project will involve creating a platform game in the Java language. Throughout the semester, additional classes and packages will be added to expand the application's functionality. Below is a brief description of the most important classes. <br>
 
 The main package will contain the basic framework for the graphical application, including a class responsible for building the window and the main game class. <br>
@@ -25,6 +26,21 @@ The levels package will contain information regarding the generated levels, incl
 Another package that will be part of the application is the one related to collectible objects, such as tokens. <br>
 The last main package (for now) is the game state package, which will include classes such as Menu and Playing. These classes will be responsible for managing specific parts of the application. <br>
 In addition to the aforementioned packages, the game will also include several utility classes such as MouseInput, KeyboardInput, DataImport, and so on. <br>
+
+
+The project includes many concepts related to object-oriented programming, such as: <br>
+-> classes and objects <br>
+-> access modifiers <br>
+-> constructors and destructors <br>
+-> inheritance (e.g., classes entity and player) <br>
+-> abstract classes (e.g., class entity, class enemy) <br>
+-> interfaces (StateMethods) <br>
+
+The project also utilizes object-oriented programming principles: <br>
+-> encapsulation (e.g., using access modifiers like private and protected) <br>
+-> data abstraction (objects provide a simplified, abstract version of their implementations) <br>
+-> inheritance (as mentioned in the examples above) <br>
+-> polymorphism (e.g., StateMethods interface for states in the whole game) <br>
 
 Aims of the project: <br>
 -> understanding the concepts of object-oriented programming <br>
