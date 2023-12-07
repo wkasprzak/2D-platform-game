@@ -26,8 +26,6 @@ public class Playing implements StateMethods {
 	private LevelCompleted levelCompletedOverlay;
 	private Pause pause;
 
-	public boolean ok;
-
 	// Pause button
 	private final Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
 	public boolean paused;
@@ -47,7 +45,6 @@ public class Playing implements StateMethods {
 	private boolean levelCompleted;
 	private boolean gameOver;
 	private boolean playerDying;
-	private boolean win;
 
 	public Playing(Game game) {
 		this.game = game;
@@ -270,10 +267,6 @@ public class Playing implements StateMethods {
 
 	public LevelHandler getLevelHandler() {
 		return levelHandler;
-	}
-
-	public void setWin(boolean win) {
-		this.win = win;
 	}
 
 }

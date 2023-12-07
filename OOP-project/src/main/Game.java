@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
-import entities.Player;
 import states.*;
 
 public class Game implements Runnable {

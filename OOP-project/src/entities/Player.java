@@ -3,13 +3,10 @@ package entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import main.Game;
 import states.Playing;
 import utils.Import;
-
-import static utils.Enemies.WARTHOG;
 
 public class Player extends Entity{
 	

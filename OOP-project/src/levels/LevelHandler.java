@@ -10,7 +10,6 @@ import objects.Fish;
 import objects.Spikes;
 import states.Gamestate;
 import main.Game;
-import states.WinState;
 import utils.Import;
 
 import static objects.InGameObject.FISH;
@@ -52,7 +51,6 @@ public class LevelHandler {
 		levelIndex++;
 		if(levelIndex >= levels.size()) {
 			levelIndex = 0;
-			game.getPlaying().setWin(true);
 			Gamestate.state = Gamestate.WINSTATE;
 		}
 

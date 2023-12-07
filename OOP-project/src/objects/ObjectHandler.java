@@ -38,8 +38,6 @@ public class ObjectHandler {
             if(s.getHitbox().intersects(player.getHitbox()))
                 player.changeHP(-6);
         }
-
-
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {

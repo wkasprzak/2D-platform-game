@@ -25,7 +25,6 @@ public class Options implements StateMethods {
 		this.game = game;
 		backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
 		createButtons();
-		
 	}
 
 	@Override
