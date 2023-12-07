@@ -17,16 +17,13 @@
 
 Long term project in Java - Wojciech Kasprzak 155824<br>
 
-The project will involve creating a platform game in the Java language. Throughout the semester, additional classes and packages will be added to expand the application's functionality. Below is a brief description of the most important classes. <br>
+Object-oriented programming project. The program is a platform game written in Java. The project comprises 30 classes organized into packages. The first package is named "entities," which includes classes necessary for generating, controlling, and defining the behavior of player character and opponents. The next package is "input", consisting of two classes for mouse and keyboard input. These classes are essential for the proper functioning of keyboard and mouse input in the application. <br>
 
-The main package will contain the basic framework for the graphical application, including a class responsible for building the window and the main game class. <br>
-The entities package will contain information related to the in-game characters, including the player and monsters. Individual classes will include information about the behavior of the creature, its state, as well as attributes such as health, strength, and so on. Sample part of the Player class: <br>
+The third package, "levels", contains classes used for building and controlling successive levels in the game. For testing purposes, three levels are added to the game, and their data is stored in CSV files. The main package serves as the primary package enabling the application's operation. It includes classes responsible for displaying the application window, as well as the main game class that controls, for example, the changing of displayed images. <br>
 
-The levels package will contain information regarding the generated levels, including their structure and textures. <br>
-Another package that will be part of the application is the one related to collectible objects, such as tokens. <br>
-The last main package (for now) is the game state package, which will include classes such as Menu and Playing. These classes will be responsible for managing specific parts of the application. <br>
-In addition to the aforementioned packages, the game will also include several utility classes such as MouseInput, KeyboardInput, DataImport, and so on. <br>
+The following package contains classes for all physical objects available in the game, such as fish and spikes. The second-to-last package includes classes for all available game states, such as menu, help, options, etc. The last class, named "utils," includes a class containing information about enemies, the visual layer, and a class necessary for importing data into the application (levels, graphics). <br>
 
+In the game, there are places designated for enabling and disabling music and special sound effects. However, I couldn't find suitable (free, with a license for any use, and in the appropriate format) resources, so the game currently does not include them. If I manage to find suitable resources, the game will include an additional audio package with classes that will enable the toggling of music and sound effects. <br>
 
 The project includes many concepts related to object-oriented programming, such as: <br>
 -> classes and objects <br>
