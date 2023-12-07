@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6317a80-cb97-4b3a-b03c-5662deda5643" name="Changes" comment="Deleted some unused things">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/levels/LevelHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/levels/LevelHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/ObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/ObjectHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/LevelCompleted.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/LevelCompleted.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Options.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/Playing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/Playing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Import.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Import.java" afterDir="false" />
-    </list>
+    <list default="true" id="b6317a80-cb97-4b3a-b03c-5662deda5643" name="Changes" comment="Deleted some unused stuff" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -136,7 +126,7 @@
       <workItem from="1701715606706" duration="32802000" />
       <workItem from="1701852453971" duration="500000" />
       <workItem from="1701857383491" duration="70000" />
-      <workItem from="1701980346928" duration="2846000" />
+      <workItem from="1701980346928" duration="3041000" />
     </task>
     <task id="LOCAL-00001" summary="Added pause screen &amp; buttons">
       <option name="closed" value="true" />
@@ -194,7 +184,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701787071438</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Deleted some unused stuff">
+      <option name="closed" value="true" />
+      <created>1701984281008</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701984281008</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,7 +219,8 @@
     <MESSAGE value="Massive changes" />
     <MESSAGE value="Last changes" />
     <MESSAGE value="Deleted some unused things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted some unused things" />
+    <MESSAGE value="Deleted some unused stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleted some unused stuff" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
