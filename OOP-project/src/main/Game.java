@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.Graphics;
+
+import audio.Audio;
 import states.*;
 
 public class Game implements Runnable {
@@ -19,6 +21,7 @@ public class Game implements Runnable {
 	private Pause pause;
 	private GameOver gameOver;
 	private WinState winState;
+	private Audio audio;
 	
 	// Game window
 	private GameWindow gameWindow;
@@ -33,11 +36,7 @@ public class Game implements Runnable {
 	public static int GAME_HEIGHT = TILES_SIZE * NUMBER_OF_TILES_IN_HEIGHT;
 	public static int GAME_WIDTH = TILES_SIZE * NUMBER_OF_TILES_IN_WIDTH;
 
-	// Music & sound
-	private static boolean music = true;
-	private static boolean sound = true;
-	
-	public Game() {	
+	public Game() {
 		initStates();
 		initWindow();
 		startGameLoop();
@@ -57,9 +56,10 @@ public class Game implements Runnable {
 		help = new Help(this);
 		story = new Story(this);
 		options = new Options(this);
-		gameOver = new GameOver(playing);
+		gameOver = new GameOver(this, playing);
 		pause = new Pause(this, playing);
 		winState = new WinState(this);
+		audio = new Audio();
 	}
 
 	public void draw(Graphics g) {
@@ -132,7 +132,7 @@ public class Game implements Runnable {
 	}
 
 	public void run() {
-		
+
 		// How long each frame will last
 		double timePerFrame = 1000000000.0 / FPS;
 		double timePerUpdate = 1000000000.0 / UPS;
@@ -147,6 +147,7 @@ public class Game implements Runnable {
 		double deltaF = 0;
 
 		while (true) {
+
 			long currentTime = System.nanoTime();
 
 			deltaU += (currentTime - previousTime) / timePerUpdate;
@@ -183,20 +184,8 @@ public class Game implements Runnable {
 		return menu;
 	}
 
-	public static boolean isMusic() {
-		return music;
-	}
-
-	public static void setMusic(boolean music) {
-		Game.music = music;
-	}
-
-	public static boolean isSound() {
-		return sound;
-	}
-
-	public static void setSound(boolean sound) {
-		Game.sound = sound;
+	public Audio getAudio() {
+		return audio;
 	}
 
 	public WinState getWinstate() {

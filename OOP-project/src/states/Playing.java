@@ -95,6 +95,7 @@ public class Playing implements StateMethods {
 
 		pauseButton.setBounds(Game.GAME_WIDTH - (int)(70 * Game.SCALE), (int)(5 * Game.SCALE), (int)(110 * Game.SCALE),(int)(15 * Game.SCALE));
 		pauseButton.printComponents(g);
+		pauseButton.setVisible(true);
 
 		if(paused) {
 			pause.draw(g);
@@ -186,6 +187,7 @@ public class Playing implements StateMethods {
 		pauseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
 				paused = !paused;
 				Gamestate.state = Gamestate.PAUSE;
 				pauseButton.setVisible(false);

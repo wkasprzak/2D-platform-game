@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 public class GameOver implements StateMethods {
 
     private Playing playing;
+    private Game game;
     public static JButton tryAgainButton, backToMenuButton;
     private BufferedImage angel, backgroundImage;
 
@@ -20,8 +21,9 @@ public class GameOver implements StateMethods {
     private Font font = new Font("STENCIL", Font.BOLD, (int)(20 * Game.SCALE));
     private Font font1 = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
 
-    public GameOver(Playing playing) {
+    public GameOver(Game game, Playing playing) {
         this.playing = playing;
+        this.game = game;
         angel = Import.importImage(Import.ANGEL);
         backgroundImage = Import.importImage(Import.MENU_BACKGROUND_IMAGE);
         createButtons();
@@ -98,6 +100,7 @@ public class GameOver implements StateMethods {
         tryAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
                 Gamestate.state = Gamestate.PLAYING;
                 playing.restartGame();
                 playing.pauseButton.setVisible(true);
@@ -110,6 +113,7 @@ public class GameOver implements StateMethods {
         backToMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
                 Gamestate.state = Gamestate.MENU;
                 playing.restartGame();
                 hideButtons();

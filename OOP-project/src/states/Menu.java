@@ -144,6 +144,7 @@ public class Menu implements StateMethods {
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
 				Gamestate.state = Gamestate.PLAYING;
 				Playing.pauseButton.setVisible(true);
 				hideButtons();
@@ -155,6 +156,7 @@ public class Menu implements StateMethods {
 		storyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
 				Gamestate.state = Gamestate.STORY;
 				Story.exitButton.setVisible(true);
 				hideButtons();
@@ -166,6 +168,7 @@ public class Menu implements StateMethods {
 		optionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
 				Gamestate.state = Gamestate.OPTIONS;
 				Options.exitButton.setVisible(true);
 				hideButtons();
@@ -178,6 +181,7 @@ public class Menu implements StateMethods {
 		exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
 				System.exit(0);
 			}
 		});
@@ -187,6 +191,7 @@ public class Menu implements StateMethods {
 		helpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
 				Gamestate.state = Gamestate.HELP;
 				Help.exitButton.setVisible(true);
 				hideButtons();

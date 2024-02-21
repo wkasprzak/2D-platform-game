@@ -32,6 +32,7 @@ public class Help implements StateMethods {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+				game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
             	Gamestate.state = Gamestate.MENU;
             	exitButton.setVisible(false);
             }

@@ -14,7 +14,8 @@ public class Pause implements StateMethods {
 
     private Game game;
     private Playing playing;
-    public static JButton returnToMenuButton, restartButton, goBackButton, musicButton, soundButton;
+    public static JButton returnToMenuButton, restartButton, goBackButton;
+    public static JToggleButton musicButton, soundButton;
     private Font font = new Font("STENCIL", Font.BOLD, (int)(15 * Game.SCALE));
     private BufferedImage backgroundImage;
 
@@ -78,6 +79,15 @@ public class Pause implements StateMethods {
     }
 
     private void showButtons() {
+        if(!game.getAudio().isMusicOn())
+            musicButton.setForeground(Color.WHITE);
+        else
+            musicButton.setForeground(Color.GRAY);
+        if(!game.getAudio().isSfxOn())
+            soundButton.setForeground(Color.WHITE);
+        else
+            soundButton.setForeground(Color.GRAY);
+
         returnToMenuButton.setVisible(true);
         restartButton.setVisible(true);
         goBackButton.setVisible(true);
@@ -89,8 +99,8 @@ public class Pause implements StateMethods {
         returnToMenuButton = new JButton("MENU");
         restartButton = new JButton("RESTART");
         goBackButton = new JButton("RETURN");
-        musicButton = new JButton("MUSIC");
-        soundButton = new JButton("SOUND");
+        musicButton = new JToggleButton("MUSIC");
+        soundButton = new JToggleButton("SOUND");
 
         returnToMenuButton.setForeground(Color.WHITE);
         returnToMenuButton.setFont(font);
@@ -110,13 +120,11 @@ public class Pause implements StateMethods {
         goBackButton.setContentAreaFilled(false);
         goBackButton.setBorderPainted(false);
 
-        musicButton.setForeground(Color.WHITE);
         musicButton.setFont(font);
         musicButton.setOpaque(false);
         musicButton.setContentAreaFilled(false);
         musicButton.setBorderPainted(false);
 
-        soundButton.setForeground(Color.WHITE);
         soundButton.setFont(font);
         soundButton.setOpaque(false);
         soundButton.setContentAreaFilled(false);
@@ -129,6 +137,7 @@ public class Pause implements StateMethods {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
                 Gamestate.state = Gamestate.PLAYING;
                 playing.restartGame();
                 playing.pauseButton.setVisible(true);
@@ -141,6 +150,7 @@ public class Pause implements StateMethods {
         returnToMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
                 Gamestate.state = Gamestate.MENU;
                 playing.restartGame();
                 hideButtons();
@@ -152,6 +162,7 @@ public class Pause implements StateMethods {
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
                 Gamestate.state = Gamestate.PLAYING;
                 playing.pauseButton.setVisible(true);
                 playing.paused = false;
@@ -162,34 +173,30 @@ public class Pause implements StateMethods {
 
     private void soundButtonAction() {
         soundButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.isSound()) {
-                    Game.setSound(false);
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
+                if (soundButton.isSelected()) {
+                    game.getAudio().muteSFX(true);
                     soundButton.setForeground(Color.GRAY);
                 } else {
-                    Game.setSound(true);
+                    game.getAudio().muteSFX(false);
                     soundButton.setForeground(Color.WHITE);
                 }
-                soundButton.requestFocusInWindow(null);
-                soundButton.repaint(); // To make it faster
             }
         });
     }
 
     private void musicButtonAction() {
         musicButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.isMusic()) {
-                    Game.setMusic(false);
+                game.getAudio().playSFX(game.getAudio().MEOW_SOUND1);
+                if (musicButton.isSelected()) {
+                    game.getAudio().muteMusic(true);
                     musicButton.setForeground(Color.GRAY);
                 } else {
-                    Game.setMusic(true);
+                    game.getAudio().muteMusic(false);
                     musicButton.setForeground(Color.WHITE);
                 }
-                musicButton.requestFocusInWindow(null);
-                musicButton.repaint(); // To make it faster
             }
         });
     }
