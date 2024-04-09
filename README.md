@@ -6,10 +6,9 @@ The project was created using JDK 21.
 
 ## Screenshots
 
-
+<p align="center">
 <img src="https://github.com/wkasprzak/2D-platform-game/assets/127446130/ee11bc63-8f7c-4c51-8180-20f0ac95b8a5" width="500" />
 <img src="https://github.com/wkasprzak/2D-platform-game/assets/127446130/6b99a8b8-9b7c-4a9e-8131-e9bbdb6b46be" width="500" />
-<p align="center">
 <img src="https://github.com/wkasprzak/2D-platform-game/assets/127446130/4b307148-2f24-4480-922c-4f0bb8cbf50c" width="500" />
 </p>
 
